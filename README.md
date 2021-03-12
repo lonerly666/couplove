@@ -5,3 +5,4 @@
 3. `npm i`
 4. cd `client`
 5. `npm i`
+6. `git remote remove origin`
