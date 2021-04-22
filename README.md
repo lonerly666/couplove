@@ -7,3 +7,5 @@
 5. `npm i`
 6. `cd ..`
 7. `git remote remove origin`
+
+This repo is configured to be deployed to heroku.
