@@ -1,0 +1,41 @@
+html
+{
+    background-color: whitesmoke;
+}
+.infoForm
+{
+    position:absolute;
+    text-align: center;
+    width:50%;
+    height:800px;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+#avatar
+{
+    position:absolute;
+    top:-60;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index: 3;
+    border:1px solid whitesmoke;
+}
+.inputFields
+{
+    width: 90%;
+}
+.infoDiv
+{
+    margin-top: 100px;
+}
+#submitInfo
+{
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 80px;
+    height:40px;
+}
