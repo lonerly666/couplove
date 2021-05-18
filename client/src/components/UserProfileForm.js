@@ -42,6 +42,7 @@ export default function UserProfileForm()
     const [nickname,setNickname] = useState("");
     const [bio,setBio] = useState("");
     const [croppedUrl, setCroppedUrl] = useState();
+    const [uploaded,setUploaded] = useState(false);
     const [dob,setDob] = useState(new Date());
     const [gender,setGender] = useState('male');
     const formRef = useRef();
@@ -61,33 +62,48 @@ export default function UserProfileForm()
             setNickname(res.user.nickname);
           }
         })
+        if(uploaded)
+        {
+          const reader = new FileReader();
+          reader.onload = function(event){
+            document.getElementById("avatarImg").setAttribute("src",event.target.result);
+          }
+          reader.readAsDataURL(croppedUrl);
+         
+        }
         return function cancel() {
           ac.abort()
         }
       });
 
       async function handleSubmit(event) {
+        if(uploaded){axios.get('/gridFs/deleteImg');}
         event.preventDefault();
         const formData = new FormData(formRef.current);
-        await axios({
-          method:'post',
-          url:'/user/info',
-          data:formData,
-          headers: {'Content-Type': 'multipart/form-data'}
-        })
-        window.location.href = "/";
+         await  axios({
+            method:'post',
+            url:'/user/info',
+            data:formData,
+            headers: {'Content-Type': 'multipart/form-data'}
+          })
+          window.location.href = "/";
       }
 
-    return <div className="infoForm">
+      function toggleNewFile(event)
+      {
+         setCroppedUrl(event.target.files[0]);
+         setUploaded(true);
+      }
+      
+      
+
+    return <div className="infoForm" id="infoForm">
         
     <form onSubmit={handleSubmit} ref={formRef}>
-    <ReactAvatar
-            style={{borderStyle: "solid", borderColor: "#F0F2F5", borderWidth: "2px", margin: "auto"}}
-            alt="user profile"
-            src={croppedUrl}
-            id="avatar"
-            className={classes.large} />
-          <input type="file" name="file" id="file"/>
+      <div id="avatar">
+        <img src={uploaded?"":"/gridFs/getProfile"} id="avatarImg" />
+      </div>
+          <input type="file" name="file" id="file" onChange={toggleNewFile}/>
           <br/>
           <div className="infoDiv">
             <TextField

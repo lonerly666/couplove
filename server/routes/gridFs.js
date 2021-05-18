@@ -7,8 +7,9 @@ const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const storage = require('../GridFsManger');
 const conn = mongoose.createConnection(mongoURI);
+const methodOverride = require('method-override');
 let gfs;
-
+router.use(methodOverride('_method'));
 conn.once('open', () => {
   // Init stream
   gfs = Grid(conn.db, mongoose.mongo);
@@ -37,4 +38,22 @@ router.get('/getProfile', (req, res) => {
     });
   });
   
+  router.get('/deleteImg', (req, res) => {
+    gfs.files.findOne({ metadata:req.user._id }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        return ({status:"ok"});
+      }
+      else{
+        gfs.remove({ _id: file._id, root: 'profileImg' }, (err, gridStore) => {
+          if (err) {
+            return res.status(404).json({ err: err });
+          }
+      
+          res.redirect('/');
+        });
+      }
+
+    });
+});
   module.exports = router;

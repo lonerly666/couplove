@@ -66,8 +66,6 @@ app.use(methodOverride('_method'));
 
 
 
-
-
 app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
 app.use('/gridFs',gridfsRoutes);

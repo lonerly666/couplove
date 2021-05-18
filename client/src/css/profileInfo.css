@@ -22,7 +22,17 @@ html
     left:50%;
     transform:translate(-50%,-50%);
     z-index: 3;
-    border:1px solid whitesmoke;
+    height:150px;
+    width:150px;
+    border-radius: 130px;
+    border:5px solid whitesmoke;
+}
+#avatar img
+{
+    object-fit: cover;
+    border-radius: 150px;
+    width: 100%;
+    height:100%;
 }
 .inputFields
 {
