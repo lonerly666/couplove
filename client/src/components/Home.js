@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from 'react';
 import axios from 'axios';
 import ReactAvatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -15,21 +16,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Home()
 {
   const [userInfo,setUserInfo] = useState();
-  const classes = useStyles();
-  const [imgUrl,setImgUrl] = useState();
     useEffect(() => {
         const ac = new AbortController();
         axios.get('/auth/isLoggedIn')
         .then(res =>res.data)
         .catch(err => console.log(err))
         .then(res => {
-          if (res.isLoggedIn === false) {
-            window.open('/login', '_self');
-          } 
-          else if(res.user.nickname===undefined||res.user.nickname===null||res.user.nickname==="")
+          if (res.isLoggedIn===false)
           {
-            window.open('/userProfileForm','_self');
+             window.open('/login','_self');
           }
+          else
+          {
+            if(res.user.nickname===undefined)
+            {
+              window.open('/userProfileForm','_self');
+            }
+            else
+            {
+              setUserInfo({...res.user});
+            }
+          } 
         })
         return function cancel() {
           ac.abort()
@@ -40,14 +47,23 @@ export default function Home()
       {
         window.location.href = "/auth/logout";
       }
+      function handleChatClick()
+      {
+        window.open('/chatRoom','_self');
+      }
+
 
     return <div>
-        <ReactAvatar
-            style={{borderStyle: "solid", borderColor: "#F0F2F5", borderWidth: "2px", margin: "auto"}}
-            alt=""
-            src ="/gridFs/getProfile"
-            className={classes.large} 
-         />
+        <div>
+          <h1>CHAT</h1>
+          <Button
+          onClick = {handleChatClick}
+          className="choiceBtn"
+          userinfo={userInfo}
+          >
+          ENTER
+          </Button>
+        </div>
         <input type="submit" value="logout" onClick={handleLogout}/>
     </div>
 }

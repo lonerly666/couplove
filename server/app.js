@@ -20,6 +20,8 @@ const storage = require('./GridFsManger');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const mongoURI = "mongodb://localhost:27017/couplove";
+const socket = require('socket.io');
+
 
  mongoose.connect(mongoURI,{
   useNewUrlParser:true,
@@ -60,9 +62,23 @@ app.use(
       credentials: true
     })
 );
-
-
+const server = app.listen(port);
+const io = socket(server,{
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+}
+})
+io.on('connection',(socket)=>{
+  console.log("new connection");
+  socket.emit('chat-msg',"Hello World");
+  socket.on('disconnect',()=>{
+    console.log("user dced!!");
+  })
+})
 app.use(methodOverride('_method'));
+
+
 
 
 
@@ -70,6 +86,3 @@ app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
 app.use('/gridFs',gridfsRoutes);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})

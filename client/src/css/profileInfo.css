@@ -15,6 +15,18 @@ html
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+#overlay
+{
+    position:absolute;
+    left:50%;
+    top:78px;
+    transform:translate(-50%,-50%);
+    z-index: 3;
+    height:150px;
+    width:150px;
+    border-radius: 130px;
+    border:5px solid whitesmoke;
+}
 #avatar
 {
     position:absolute;
@@ -26,6 +38,7 @@ html
     width:150px;
     border-radius: 130px;
     border:5px solid whitesmoke;
+    overflow: hidden;
 }
 #avatar img
 {
@@ -48,4 +61,22 @@ html
     border-radius: 10px;
     width: 80px;
     height:40px;
+}
+#file
+{
+    display: none;
+}
+.fileIpt
+{
+    position:relative;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+    height:40px;
+}
+#uploadBtn
+{
+    color: black;
+    position:absolute;
+    right:0px;
 }

@@ -15,6 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import '../css/profileInfo.css';
 import ReactAvatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import IconButton from '@material-ui/core/IconButton';
 
 const genders = [
     {
@@ -32,10 +34,6 @@ const genders = [
       marginTop:20,
       minWidth: "90%",
     },
-    large: {
-      width: theme.spacing(19),
-      height: theme.spacing(19),
-    },
   }));
 export default function UserProfileForm()
 {
@@ -45,6 +43,7 @@ export default function UserProfileForm()
     const [uploaded,setUploaded] = useState(false);
     const [dob,setDob] = useState(new Date());
     const [gender,setGender] = useState('male');
+    const [newProfile,setNewProfile]=useState(false);
     const formRef = useRef();
     const classes = useStyles();
 
@@ -60,22 +59,41 @@ export default function UserProfileForm()
           else if(res.user.nickname)
           {
             setNickname(res.user.nickname);
+            setDob(res.user.dateOfBirth);
+            setBio(res.user.bio);
           }
         })
-        if(uploaded)
-        {
-          const reader = new FileReader();
-          reader.onload = function(event){
-            document.getElementById("avatarImg").setAttribute("src",event.target.result);
-          }
-          reader.readAsDataURL(croppedUrl);
-         
-        }
         return function cancel() {
           ac.abort()
         }
-      });
+      },[]);
 
+      axios({
+        method:'get',
+        url:'/gridFs/checkExists',
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
+      .then(res=>res.data)
+      .catch(err=>console.log(err))
+      .then(res=>{
+        if(res===true)
+        {
+           document.getElementById("overlay").style.visibility="hidden";
+        }
+      })
+      if(uploaded)
+      {
+        const reader = new FileReader();
+        reader.onload = function(event){
+          if(event.target.result===null)
+          {
+            return;
+          }
+          document.getElementById("avatarImg").setAttribute("src",event.target.result);
+        }
+        reader.readAsDataURL(croppedUrl);
+       
+      }
       async function handleSubmit(event) {
         if(uploaded){axios.get('/gridFs/deleteImg');}
         event.preventDefault();
@@ -91,19 +109,42 @@ export default function UserProfileForm()
 
       function toggleNewFile(event)
       {
-         setCroppedUrl(event.target.files[0]);
+        const file = event.target.files[0];
+         if(file===undefined)
+        {
+          return;
+        }
+        else
+        {
+         document.getElementById("overlay").style.visibility="hidden";
+         setCroppedUrl(file);
          setUploaded(true);
+        }
       }
       
-      
+      function uploadFile()
+      {
+         document.getElementById("file").click();
+      }
 
     return <div className="infoForm" id="infoForm">
         
     <form onSubmit={handleSubmit} ref={formRef}>
       <div id="avatar">
-        <img src={uploaded?"":"/gridFs/getProfile"} id="avatarImg" />
+       <ReactAvatar
+        id="overlay"
+      />
+       <img src={uploaded?"":"/gridFs/getProfile"} id="avatarImg"/>
       </div>
+      <div className="fileIpt">
           <input type="file" name="file" id="file" onChange={toggleNewFile}/>
+          <IconButton
+          id="uploadBtn"
+          onClick={uploadFile}
+          >
+            <AddAPhotoIcon/>
+          </IconButton>
+      </div>
           <br/>
           <div className="infoDiv">
             <TextField
