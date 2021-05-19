@@ -37,7 +37,7 @@ html
     height:150px;
     width:150px;
     border-radius: 130px;
-    border:5px solid whitesmoke;
+    border:10px solid whitesmoke;
     overflow: hidden;
 }
 #avatar img

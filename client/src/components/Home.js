@@ -3,7 +3,7 @@ import axios from 'axios';
 import ReactAvatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
+import Activity from './ActivityPane';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: "100%",
@@ -54,16 +54,7 @@ export default function Home()
 
 
     return <div>
-        <div>
-          <h1>CHAT</h1>
-          <Button
-          onClick = {handleChatClick}
-          className="choiceBtn"
-          userinfo={userInfo}
-          >
-          ENTER
-          </Button>
-        </div>
+        <Activity title={"Chat"} desc={"Chat with your loved ones"} link={"/chatRoom"} />
         <input type="submit" value="logout" onClick={handleLogout}/>
     </div>
 }

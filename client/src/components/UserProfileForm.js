@@ -67,7 +67,8 @@ export default function UserProfileForm()
           ac.abort()
         }
       },[]);
-
+      useEffect(() => {
+        const ac = new AbortController();
       axios({
         method:'get',
         url:'/gridFs/checkExists',
@@ -81,6 +82,10 @@ export default function UserProfileForm()
            document.getElementById("overlay").style.visibility="hidden";
         }
       })
+      return function cancel() {
+        ac.abort()
+      }
+    },[]);
       if(uploaded)
       {
         const reader = new FileReader();

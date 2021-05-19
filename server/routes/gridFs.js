@@ -20,9 +20,8 @@ router.get('/getProfile', (req, res) => {
     gfs.files.findOne({ metadata:req.user._id }, (err, file) => {
       // Check if file
       if (!file || file.length === 0) {
-        return res.status(404).json({
-          err: 'No file exists'
-        });
+        res.send(null);
+        return null;
       }
   
       // Check if image
@@ -56,4 +55,26 @@ router.get('/getProfile', (req, res) => {
 
     });
 });
+
+  router.get('/checkExists',(req,res)=>{
+   gfs.files.findOne({metadata:req.user._id},(err,file)=>{
+     if(err)
+     {
+       res.send({
+         err:err
+       })
+     }
+     else
+     {
+       if(file)
+       {
+         res.send(true);
+       }
+       else
+       {
+         res.send(false);
+       }
+     }
+   });
+  });
   module.exports = router;
