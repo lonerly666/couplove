@@ -1,0 +1,9 @@
+.nav-div{
+    border:1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    height:80px;
+}

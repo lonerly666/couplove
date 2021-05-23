@@ -5,7 +5,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const AUTH_REDIRECT_URL="http://localhost:5000";
 
 
-// passport.use(User.createStrategy());
+passport.use(User.createStrategy());
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);

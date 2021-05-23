@@ -60,6 +60,7 @@ export default function UserProfileForm()
           {
             setNickname(res.user.nickname);
             setDob(res.user.dateOfBirth);
+            setGender(res.user.gender);
             setBio(res.user.bio);
           }
         })

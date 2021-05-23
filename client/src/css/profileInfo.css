@@ -1,18 +1,21 @@
+*{
+    margin:0;
+    padding:0;
+}
 html
 {
     background-color: whitesmoke;
 }
 .infoForm
 {
-    position:absolute;
+    width:45%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    width:50%;
-    height:800px;
+    margin-top: 100px;
+    height: 700px;
+    border-radius: 30px;
     background-color: white;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 #overlay
@@ -25,20 +28,20 @@ html
     height:150px;
     width:150px;
     border-radius: 130px;
-    border:5px solid whitesmoke;
+    border:10px solid whitesmoke;
 }
 #avatar
 {
     position:absolute;
-    top:-60;
     left:50%;
+    top:78px;
     transform:translate(-50%,-50%);
     z-index: 3;
     height:150px;
     width:150px;
     border-radius: 130px;
-    border:10px solid whitesmoke;
     overflow: hidden;
+    border:10px solid whitesmoke;        
 }
 #avatar img
 {
@@ -57,10 +60,9 @@ html
 }
 #submitInfo
 {
-    margin-top: 20px;
-    border-radius: 10px;
-    width: 80px;
-    height:40px;
+    position: absolute;
+    bottom:0;
+    transform:translate(-50%,-50%);
 }
 #file
 {
@@ -71,12 +73,11 @@ html
     position:relative;
     margin-right: auto;
     margin-left: auto;
-    width: 50%;
+    width: 220px;
     height:40px;
 }
 #uploadBtn
 {
+    float: right;
     color: black;
-    position:absolute;
-    right:0px;
 }

@@ -8,7 +8,8 @@ class User{
         GENDER : 'gender',
         PARTNER : 'partner',
         NUM_OF_POSTS : 'numOfPosts',
-        BIO: 'bio'
+        BIO: 'bio',
+        ROOMID:'roomId'
     }
 
     constructor(build)
