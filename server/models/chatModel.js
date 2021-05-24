@@ -3,7 +3,7 @@ const ObjectId = require("mongodb").ObjectID;
 
 const chatSchema = new mongoose.Schema ({
   userId: ObjectId,
-  userNickName: String,
+  userNickname: String,
   timeOfCreation: Date,
   text: String,
   roomId: ObjectId,

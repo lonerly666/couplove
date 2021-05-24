@@ -15,12 +15,17 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const gridfsRoutes = require('./routes/gridFs');
+const chatRoutes = require('./routes/chat');
 const multer = require('multer');
 const storage = require('./GridFsManger');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const socket = require('socket.io');
+const RoomModel = require('./models/roomModel');
+const Chat = require('./entities/Chat');
+const ChatManager = require('./dbmanagers/ChatManager');
+const UserModel = require('./models/userModel');
 
 
  mongoose.connect(mongoURI,{
@@ -69,13 +74,55 @@ const io = socket(server,{
     methods: ["GET", "POST"]
 }
 })
-io.on('connection',(socket)=>{
+io.on('connection', async(socket)=>{
+  let userId;
   console.log("new connection");
-  socket.emit('chat-msg',"Hello World");
-  socket.on('disconnect',()=>{
-    console.log("user dced!!");
-  })
-})
+  socket.on('join',async(data,callback)=>{
+    userId = data.userId;
+    roomId = data.roomId;
+    const res1 = await RoomModel.findOne({userId:data.userId});
+    const res2 = await RoomModel.findOne({partnerId:data.userId});
+    if(!res1&&!res2)
+    {
+      return callback({status:"You are not allowed to join this room!"})
+    }
+    socket.join(String(data.roomId));
+
+      
+  });
+
+  socket.on('sendMsg',async(msg)=>{
+    console.log(msg);
+    let chat;
+    let createdChat;
+    const timeOfCreation = new Date();
+    chat = new Chat.Builder()
+    .setRoomId(msg.roomId)
+    .setText(msg.msg)
+    .setTimeOfCreation(timeOfCreation)
+    .setUserId(msg.userId)
+    .setUserNickname(msg.userNickname)
+    .build();
+    createdChat = await ChatManager.createChat(chat);
+    io.to(String(msg.roomId)).emit('chatMsg',{
+      _id:createdChat._id,
+      text:msg.msg,
+      userId:msg.userId,
+      userNickname:msg.userNickname,
+      timeOfCreation:timeOfCreation
+    });
+    
+  });
+
+  
+
+    socket.on('disconnect',()=>{
+      console.log("user dced!!");
+    });
+
+  });
+  
+  
 app.use(methodOverride('_method'));
 
 
@@ -85,4 +132,4 @@ app.use(methodOverride('_method'));
 app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
 app.use('/gridFs',gridfsRoutes);
-
+app.use('/chat',chatRoutes);

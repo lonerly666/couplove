@@ -58,6 +58,13 @@ module.exports = function(app) {
     })
   );
   app.use(
+    '/gridFs/getPartnerProfile',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
     '/gridFs/findExisting',
     createProxyMiddleware({
       target: 'http://localhost:5000',
@@ -108,6 +115,13 @@ module.exports = function(app) {
   );
   app.use(
     '/user/sendRequest',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/chat/getChats',
     createProxyMiddleware({
       target: 'http://localhost:5000',
       changeOrigin: true,

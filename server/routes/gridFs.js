@@ -37,6 +37,27 @@ router.get('/getProfile', (req, res) => {
     });
   });
   
+  router.get('/getPartnerProfile', (req, res) => {
+    gfs.files.findOne({ metadata:req.user.partner }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        res.send(null);
+        return null;
+      }
+  
+      // Check if image
+      if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+        // Read output to browser
+        const readstream = gfs.createReadStream(file.filename);
+        readstream.pipe(res);
+      } else {
+        res.status(404).json({
+          err: 'Not an image'
+        });
+      }
+    });
+  });
+
   router.get('/deleteImg', (req, res) => {
     gfs.files.findOne({ metadata:req.user._id }, (err, file) => {
       // Check if file

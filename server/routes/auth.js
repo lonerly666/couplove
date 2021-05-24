@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const storage = require('../GridFsManger');
 const conn = mongoose.createConnection(mongoURI);
-
+const UserModel = require('../models/userModel');
 
 // Init gfs
 let gfs;
@@ -51,11 +51,17 @@ router.get("/google/couplove",
 
 router.get("/isLoggedIn", async (req, res) => {
 if(req.user){
+  let partner;
+  if(req.user.partner!==null)
+  {
+     partner = await UserModel.findById(req.user.partner);
+  }
  gfs.files.findOne({metadata:req.user._id},(err,files)=>{   
          res.send({
            files:files,
            user: req.user,
            isLoggedIn: true,
+           partnerInfo:partner?partner:null,
          })
     })
 

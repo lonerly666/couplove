@@ -7,8 +7,14 @@ const Chat = require('../entities/Chat');
 const SPECIAL_NUM = -1;
 
 class ChatManager{
-    static createChat(chat){
-        return ChatModel.create(this.constructorChat(chat))
+    static async createChat(chat){
+        return await ChatModel.create({
+            userId:chat.userId,
+            userNickname : chat.userNickname,
+            timeOfCreation : chat.timeOfCreation,
+            text : chat.text,
+            roomId : chat.roomId,
+        })
         .then(docs=>{
             return docs;
         })
@@ -21,10 +27,10 @@ class ChatManager{
     {
         return{
             userId:chat.userId,
-            userNickname = chat.userNickname,
-            timeOfCreation = chat.timeOfCreation,
-            text = chat.text,
-            roomId = chat.roomId,
+            userNickname : chat.userNickname,
+            timeOfCreation : chat.timeOfCreation,
+            text : chat.text,
+            roomId : chat.roomId,
         }
     }
 
@@ -49,3 +55,4 @@ class ChatManager{
     }
 
 }
+module.exports = ChatManager;

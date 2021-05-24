@@ -44,6 +44,7 @@ export default function UserProfileForm()
     const [dob,setDob] = useState(new Date());
     const [gender,setGender] = useState('male');
     const [newProfile,setNewProfile]=useState(false);
+    const [partner,setPartner] = useState();
     const formRef = useRef();
     const classes = useStyles();
 
@@ -62,6 +63,10 @@ export default function UserProfileForm()
             setDob(res.user.dateOfBirth);
             setGender(res.user.gender);
             setBio(res.user.bio);
+            if(res.user.partner!==null)
+            {
+            setPartner(res.user.partner);
+            }
           }
         })
         return function cancel() {
@@ -104,6 +109,7 @@ export default function UserProfileForm()
         if(uploaded){axios.get('/gridFs/deleteImg');}
         event.preventDefault();
         const formData = new FormData(formRef.current);
+        partner&&formData.append('partner',partner);
          await  axios({
             method:'post',
             url:'/user/info',

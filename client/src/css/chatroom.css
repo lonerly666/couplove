@@ -1,0 +1,83 @@
+
+.container {
+	width: 80%;
+	height: auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	border-radius: 10px;
+    
+    box-shadow: 
+    0 6px 15px 2px rgba(0,0,0,0.5);
+	overflow: hidden;
+}
+
+/* chat_box */
+.chat_box {
+	display: flex;
+	flex-direction: column;
+	height: 700px;	
+}
+.chat_box > * {
+	padding: 16px;
+}
+
+
+/* body */
+.body {
+	flex-grow: 1;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background-color: rgba(0, 0, 0, 0.774);
+}
+.body::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: rgba(0, 0, 0, 0.774);
+}
+
+.body::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #fffdfd;
+}
+
+.body::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(255, 255, 255);
+	border-radius: 20px;
+}
+
+.body::before,::after{
+    
+    filter: blur(5px);
+}
+.body .bubble {
+	display: inline-block;
+	padding: 10px;
+	margin-bottom: 5px;
+	border-radius: 15px;
+}
+.body .bubble p {
+	color: #f9fbff;
+	font-size: 14px;
+	text-align: left;
+	line-height: 1.4;
+}
+.body .incoming {
+	text-align: left;
+}
+.body .incoming .bubble {
+	background-color: #b2b2b2;
+}
+.body .outgoing {
+	text-align: right;
+}
+.body .outgoing .bubble {
+	background-color: #79c7c5;
+}
+
+/* foot */

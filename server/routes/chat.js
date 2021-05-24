@@ -12,9 +12,10 @@ router.post('/getChats',upload.none(),async(req,res)=>{
     res.send(result);
 })
 
-router.post('/deleteChat',upload.none(),(req,res)=>{
+router.post('/deleteChat',upload.none(),async(req,res)=>{
     const result = await ChatManager.deleteChat(req.body.roomId,req.user._id);
     res.send(result);
 })
 
-router.post('/sendChat')
+
+module.exports = router;

@@ -1,14 +1,13 @@
 "use strict";
 
-const { FastRewind } = require("@material-ui/icons");
 
 class Chat{
     static FIELDS={
-        USER_ID = 'userId',
-        USER_NICKNAME ='userNickname',
-        TIME_OF_CREATION = 'timeOfCreation',
-        TEXT = 'text',
-        ROOM_ID = 'roomId'
+        USER_ID :'userId',
+        USER_NICKNAME :'userNickname',
+        TIME_OF_CREATION : 'timeOfCreation',
+        TEXT :'text',
+        ROOM_ID :'roomId'
     }
 
     constructor(build){
