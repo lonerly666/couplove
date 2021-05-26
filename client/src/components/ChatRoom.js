@@ -1,14 +1,15 @@
-import {useEffect, useState,useRef} from 'react';
+import {useEffect, useState,useRef, useContext} from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
-import { set } from 'mongoose';
 import InputBox from './InputBox';
 import '../css/chatroom.css';
 import ChatNav from './ChatNav';
 import ChatBubble from './ChatBubble';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { SocketContext } from "../SocketContext";
+import VideoRespond from './VideoRespond';
+import VideoCall from './VideoCall';
 
-let socket;
 export default function ChatRoom(props)
 {
     const ENDPOINT = 'localhost:5000';
@@ -21,10 +22,11 @@ export default function ChatRoom(props)
     const [partnerInfo,setPartnerInfo] = useState([]);
     const [isUser,setIsUser] = useState(false);
     const [partnerStatus,setPartnerStatus] = useState();
+    // const [isCalling,setIsCalling] = useState();
+    const {joinRoom,sendMsg,newMessage,callUser,call,me,callAccepted,onBoth,startCall} = useContext(SocketContext);
 
     useEffect(()=>{
         const ac = new AbortController();
-        socket = io(ENDPOINT);
         axios.get('/auth/isLoggedIn')
         .then(res =>res.data)
         .catch(err => console.log(err))
@@ -32,6 +34,9 @@ export default function ChatRoom(props)
             if(res.isLoggedIn)
             {
               let userId = res.user._id;
+              let partner = res.user.partner;
+              let nickname = res.user.nickname;
+              console.log(nickname);
               setPartnerInfo(res.partnerInfo)
                 if(res.user.partner!==null)
                 { 
@@ -43,25 +48,15 @@ export default function ChatRoom(props)
                   .then(res=>res.data)
                   .catch(err=>console.log(err))
                   .then(res=>{
-                    const formdata = new FormData();
-                    formdata.append('roomId',res.roomInfo._id);
-                    axios({
-                      method:'post',
-                      url:'/chat/getChats',
-                      data:formdata,
-                      headers: {'Content-Type': 'multipart/form-data'}
-                    })
-                    .then(res=>res.data)
-                    .catch(err=>console.log(err))
-                    .then(res=>{
-                      setMessages(res.chats.reverse().map(chat=>{
-                        return chat;
-                      }))
-                    })
+                    setMessages(res.chatInfo.chats.reverse().map(chat=>{
+                      return chat;
+                    }))
                     let roomId = res.roomInfo._id;
                     setRoomId(roomId);
-                    
-                   socket.emit('join',{roomId,userId})
+                    if(nickname)
+                    {
+                       joinRoom(roomId,userId,nickname);  
+                    }
                   })
                 }
                 setUserId(res.user._id);
@@ -71,34 +66,24 @@ export default function ChatRoom(props)
         });
         return function cancel() {
             ac.abort();
-            socket.emit('disconnect');
-            socket.off();
           }
-    },[ENDPOINT])
+    },[])
 
     useEffect(()=>{
-      const ac = new AbortController();
-      socket.on('chatMsg',(chat)=>{
-        setMessages(prevData=>{
-          return [...prevData,chat];
-        })
+      setMessages(prevData=>{
+        return[...prevData,newMessage]
       })
-      socket.on('userStatus',(status)=>{  
-        setPartnerStatus(status);
-      })
-      return function cancel() {
-        ac.abort();
-      }
-    },[]);
+      
+    },[newMessage]);
 
-
+    
     function handleSendMsg(event)
     {
       let msg = document.getElementById("chat").value;
       event.preventDefault();
       if(msg.length>0&&roomId)
       {
-        socket.emit('sendMsg',{msg,roomId,userId,userNickname});
+        sendMsg(msg,roomId,userId,userNickname);
         setText("");
       }
       else{
@@ -112,13 +97,23 @@ export default function ChatRoom(props)
       window.open('/','_self');
     }
 
-    return<div className="container">
+    async function toggleVideoCall()
+    {
+      await startCall();
+      await callUser();
+    };
+    return<div>
+        {call.isReceivingCall &&!callAccepted&&<VideoRespond/>}
+     <VideoCall/>
+      
+      <div className="container" id="container">
+     
 		<div className="chat_box">
-			<ChatNav toggleBackHome={toggleBackHome} partnerInfo={partnerInfo} partnerStatus={partnerStatus}/>
+			<ChatNav toggleBackHome={toggleBackHome} partnerInfo={partnerInfo} partnerStatus={partnerStatus} toggleVideoCall={toggleVideoCall}/>
 			<div className="body">
 				<div className="incoming">
           <ScrollToBottom>
-          {messages.map((chat,index)=>{
+          {messages&&userInfo&&messages.map((chat,index)=>{
             return <ChatBubble key={index}textInfo={chat} user={userInfo}/>
           })} 
 
@@ -136,4 +131,6 @@ export default function ChatRoom(props)
 			<InputBox handleSendMsg={handleSendMsg}/>
 		</div>
 	</div>
+
+  </div>
 }

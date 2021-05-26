@@ -1,0 +1,44 @@
+.video-div{
+    position: absolute;
+    right: 10px;
+    min-height: 100vh;
+    width: 400px;
+    background-color: white;
+    display: none;
+}
+.vid-call{
+    height: 200px;
+    width:100%;
+    margin-top: 10px;
+    border:1px solid black;
+}
+.vid-call video{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.vid-call1{
+    height: 200px;
+    width:100%;
+    margin-top: 80px;
+    border:1px solid black;
+}
+.vid-call1 video{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.option-div{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+.option-btn{
+    width: 80px;
+    height: 80px;
+}
+#end{
+    color: whitesmoke;
+    background-color: rgb(231, 43, 43);
+}

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 export default function ChatNav(props)
 {
-    const {toggleBackHome,partnerInfo,partnerStatus} = props
+    const {toggleBackHome,partnerInfo,partnerStatus,toggleVideoCall,callAccepted} = props
 	const [readyDisplay,setReadyDisplay] = useState(false);
 	const [isOnline,setIsOnline] = useState(false);
 	useEffect(()=>{
@@ -44,7 +44,7 @@ export default function ChatNav(props)
 				</div>
 				<ul id="bar_tool">
 					<IconButton id="iconBtn"><span className="alink"><PhoneIcon id="contact"/></span></IconButton>
-					<IconButton id="iconBtn"><span className="alink"><VideocamIcon id="contact"/></span></IconButton>
+					<IconButton id="iconBtn" onClick={toggleVideoCall}><span className="alink"><VideocamIcon id="contact"/></span></IconButton>
 					<IconButton id="iconBtn"><span className="alink"><MoreHorizIcon id="contact"/></span></IconButton>
 				</ul>
 			</div>

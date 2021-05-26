@@ -5,12 +5,11 @@ import '../css/chatBubble.css';
 export default function ChatBubble(props)
 {
     const{textInfo,user}= props;
-   
-    if(textInfo.userId===user._id)
-    {
+    if(textInfo&&textInfo.userId===user._id)
+    {       
         return<div className="bubble-div right">
            <div className = "context">
-            <p>{textInfo.text}</p>
+            <p>{textInfo&&textInfo.text}</p>
            </div>
         </div>
     }
@@ -20,7 +19,7 @@ export default function ChatBubble(props)
             <img src="/gridFs/getPartnerProfile"/>
             </div>
             <div className = "context">
-            <p>{textInfo.text}</p>
+            <p>{textInfo&&textInfo.text}</p>
            </div>
         </div>
     }

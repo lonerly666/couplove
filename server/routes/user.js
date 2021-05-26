@@ -9,7 +9,7 @@ const storage = require('../GridFsManger');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const conn = mongoose.createConnection(mongoURI);
 const RoomModel = require('../models/roomModel');
-
+const ChatManager = require('../dbmanagers/ChatManager');
 
 // Init gfs
 let gfs;
@@ -80,10 +80,11 @@ router.get('/getRoomId',upload.none(),async(req,res)=>{
   const result2 = await RoomModel.findOne({partnerId:req.user._id});
   if(result1||result2)
   {
-    res.send({
-      status:true,
+    const chatInfo = await ChatManager.getChats(result1?result1._id:result2._id);
+    res.send({ status:true,
+      chatInfo:chatInfo,
       roomInfo:result1?result1:result2,
-    })
+    });
   }
   else{
     res.send({

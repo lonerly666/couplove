@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import { useContext } from 'react';
 
 
 export default function ActivityPane(props)
@@ -9,7 +10,6 @@ export default function ActivityPane(props)
         desc,
         link,
     }=props;
-
 
     return<div>
         <h1>{title}</h1>

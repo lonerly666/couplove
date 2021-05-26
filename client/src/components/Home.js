@@ -7,6 +7,7 @@ import Activity from './ActivityPane';
 import Navbar from '../components/Navbar';
 import '../css/home.css';
 
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: "100%",
@@ -132,6 +133,7 @@ export default function Home()
       
 
         <Activity title={"Chat"} desc={"Chat with your loved ones"} link={"/chatRoom"} />
+        <Activity title={"Cinema"} desc={"Watch Movie Together!"} link ={"/cinema"}/>
         <input type="submit" value="logout" onClick={handleLogout}/>
 
         <form onSubmit={acceptPartner} ref={acceptRef}>
