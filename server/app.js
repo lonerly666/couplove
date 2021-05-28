@@ -16,6 +16,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const gridfsRoutes = require('./routes/gridFs');
 const chatRoutes = require('./routes/chat');
+const videofsRoutes = require('./routes/videoFs');
 const multer = require('multer');
 const storage = require('./GridFsManger');
 const Grid = require('gridfs-stream');
@@ -76,19 +77,11 @@ const io = socket(server,{
 }
 })
 io.on('connection', async(socket)=>{
-  let userId;
   let roomId;
   console.log("new connection");
   
   socket.on('join',async(data,callback)=>{
-    userId = data.userId;
     roomId = data.roomId;
-    const res1 = await RoomModel.findOne({userId:data.userId});
-    const res2 = await RoomModel.findOne({partnerId:data.userId});
-    if(!res1&&!res2)
-    {
-      return callback({status:"You are not allowed to join this room!"})
-    }
     socket.join(String(data.roomId));
     users.push(socket.id);
     io.to(String(data.roomId)).emit('me',{id:socket.id,users:users});
@@ -122,6 +115,7 @@ io.on('connection', async(socket)=>{
     if(users.length>1)
     {
     io.to(String(roomId)).emit('start');
+    io.to(socket.id).emit('startCalling');
     }
     else
     {
@@ -150,15 +144,30 @@ io.on('connection', async(socket)=>{
       let userToCall = users.filter(e=>e!=socket.id);
       io.to(socket.id).emit('moveDiv');
       console.log(userToCall);
-      console.log(socket.id)
       let from = socket.id;
-      io.to(userToCall).emit("calluser",{signal:signalData,from,name});
+      console.log(name);
+      io.to(userToCall).emit("calluser",{from,name,signal:signalData});
     });   
 
 
     socket.on("answercall",(data)=>{
       io.to(data.to).emit("callaccepted",data.signal);
     });
+
+    socket.on('changeVideoState',state=>{
+      io.to(String(roomId)).emit('changeState',!state);
+    })
+    socket.on('keepUpdate',time=>{
+      io.to(String(roomId)).emit('update',time);
+    })
+    socket.on('changeProgress',pointed=>{
+      io.to(String(roomId)).emit('updateProgress',pointed);
+    })
+
+    socket.on('onlineUrl',data=>{
+      io.to(String(roomId)).emit('onlineUrl',data);
+    })
+
   });
 
   
@@ -173,3 +182,4 @@ app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
 app.use('/gridFs',gridfsRoutes);
 app.use('/chat',chatRoutes);
+app.use('/videoFs',videofsRoutes);

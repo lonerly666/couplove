@@ -127,4 +127,25 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    '/videoFs/upload',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/videoFs/choose/:filename',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/videoFs/getAllVideos',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
 };

@@ -5,6 +5,7 @@ import UserProfileForm from './components/UserProfileForm';
 import ChatRoom from './components/ChatRoom';
 import {ContextProvider} from './SocketContext';
 import Cinema from './components/Cinema';
+import Comemorate from './components/Commemorate';
 // import './App.css';
 
 export default function App(props) {
@@ -14,10 +15,11 @@ export default function App(props) {
         <Route path="/" exact component={Home}/>
         <Route path="/login" exact component={Login}/>
         <Route path="/userProfileForm" exact component={UserProfileForm}/>
+        <Route path="/cinema" exact component={Cinema}/>
+        <Route path="/commemorate" exact component={Comemorate}/>
         <ContextProvider>
         <Route path="/chatRoom" exact component={ChatRoom}/>
         </ContextProvider>
-        <Route path="/cinema" exact component={Cinema}/>
       </Switch>
     </main>
   )

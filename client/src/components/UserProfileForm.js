@@ -108,7 +108,7 @@ export default function UserProfileForm()
       async function handleSubmit(event) {
         if(uploaded){axios.get('/gridFs/deleteImg');}
         event.preventDefault();
-        const formData = new FormData(formRef.current);
+        const formData = new FormData(formRef.current); 
         partner&&formData.append('partner',partner);
          await  axios({
             method:'post',

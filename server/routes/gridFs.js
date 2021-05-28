@@ -6,8 +6,12 @@ const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const storage = require('../GridFsManger');
+const videoStorage = require('../GridFsVideoManager');
 const conn = mongoose.createConnection(mongoURI);
 const methodOverride = require('method-override');
+const multer  = require('multer');
+
+
 let gfs;
 router.use(methodOverride('_method'));
 conn.once('open', () => {
@@ -16,6 +20,8 @@ conn.once('open', () => {
   gfs.collection('profileImg');
 });
 
+
+const upload = multer({storage:videoStorage});
 router.get('/getProfile', (req, res) => {
     gfs.files.findOne({ metadata:req.user._id }, (err, file) => {
       // Check if file
@@ -98,4 +104,6 @@ router.get('/getProfile', (req, res) => {
      }
    });
   });
+
+
   module.exports = router;

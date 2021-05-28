@@ -8,11 +8,12 @@ const ENDPOINT='localhost:5000';
 let socket;
 let isCaller = false;
 let isAnswered = false;
+let name ;
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
   const [stream, setStream] = useState();
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
   const [call, setCall] = useState({});
   const [userId,setUserId] = useState('');
   const [roomId,setRoomId] = useState('');
@@ -38,6 +39,9 @@ const ContextProvider = ({ children }) => {
         setNewMessage(chat);
     })
 
+    socket.on('startCalling',e=>{
+      callUser();
+    })
     socket.on('start',e=>{
       setIsCalling(true);
     })
@@ -105,8 +109,8 @@ const ContextProvider = ({ children }) => {
       socket.emit('join',{userId,roomId});
       setUserId(userId);
       setRoomId(roomId);
-      setPartnerId(partnerId)
-      setName(nickname);
+      // setName(nickname); 
+      name=nickname;
   }
   let audio =true;
   const muteAudio = ()=>{
@@ -217,7 +221,6 @@ const ContextProvider = ({ children }) => {
       userVideo,
       stream,
       name,
-      setName,
       callEnded,
       callUser,
       leaveCall,

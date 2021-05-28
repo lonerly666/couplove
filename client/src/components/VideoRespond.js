@@ -24,7 +24,6 @@ export default function VideoRespond(props)
         answerCall();
         
     }
-
     return <div className="respond">
         <Avatar src="/gridFs/getPartnerProfile" id="caller"/>
         <div className="description">

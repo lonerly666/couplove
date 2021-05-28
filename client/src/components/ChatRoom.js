@@ -83,7 +83,7 @@ export default function ChatRoom(props)
       event.preventDefault();
       if(msg.length>0&&roomId)
       {
-        sendMsg(msg,roomId,userId,userNickname);
+        sendMsg(msg,userId,userNickname,roomId);
         setText("");
       }
       else{
@@ -100,7 +100,7 @@ export default function ChatRoom(props)
     async function toggleVideoCall()
     {
       await startCall();
-      await callUser();
+      // await callUser();
     };
     return<div>
         {call.isReceivingCall &&!callAccepted&&<VideoRespond/>}
