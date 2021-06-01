@@ -73,7 +73,7 @@ export default function VideoUploadDiv(props)
         type="submit"   
       >
         Upload
-      </Button>
+      </Button> 
         </form>
         <p id="file-name" style={{color:"rgb(56, 245, 71)"}}></p>
         {uploadProgress&&

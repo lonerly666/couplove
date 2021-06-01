@@ -1,9 +1,17 @@
+.login-page-div{
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png');
+	 background-position: center bottom;
+	 background-repeat: no-repeat;
+	 background-size: 100% auto;
+     height: 100vh;
+}
 .login-page
 {
     margin-left: auto;
     margin-right: auto;
     width:98%;
     text-align: center;
+    
 }
 .title
 {

@@ -1,0 +1,41 @@
+
+.memoryBook-div {
+    background-color: #F0F2F5;
+    flex: 1;
+    flex-direction: row;
+    min-height: 100%;
+    padding-top: 6em;
+    padding-bottom: 3em;
+}
+.postDiv{
+    width: 100%;
+
+}
+.post-option{
+    height: 130px;
+    width: 25%;
+    border-radius: 10px;
+    margin-left: auto;
+    background-color: white;
+    box-shadow: 0 0 5px rgb(153, 153, 153);
+    margin-right: auto;
+    text-align: center;
+    position: relative;
+}
+#post-btn{
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+    color: black;
+}
+#memory-create-post{
+    width: 70%;
+    background-color: rgb(230, 84, 230);
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 12px;
+    position:absolute;  
+    bottom:10px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

@@ -21,6 +21,7 @@ conn.once('open', () => {
 const upload = multer({storage:videoStorage});
 
 router.post('/upload',upload.single('video'),(req,res)=>{
+  console.log(req.file.id);
     res.send({status:true});
 })
 
@@ -29,7 +30,6 @@ router.get('/choose/:filename',upload.none(),async(req,res)=>{
         
         if (!file || file.length === 0) {
             res.send(null);
-            console.log("YES")
             return null;
           }
           

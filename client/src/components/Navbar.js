@@ -11,7 +11,7 @@ export default function Navbar(props)
         <input type="text" id="reqId" name="reqId"/>
         <input type="submit"/>
         </form>
-
+        
         
     </div>
 }

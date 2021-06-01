@@ -5,7 +5,7 @@ import UserProfileForm from './components/UserProfileForm';
 import ChatRoom from './components/ChatRoom';
 import {ContextProvider} from './SocketContext';
 import Cinema from './components/Cinema';
-import Comemorate from './components/Commemorate';
+import MemoryBook from './components/MemoryBook/MemoryBook';
 // import './App.css';
 
 export default function App(props) {
@@ -16,7 +16,7 @@ export default function App(props) {
         <Route path="/login" exact component={Login}/>
         <Route path="/userProfileForm" exact component={UserProfileForm}/>
         <Route path="/cinema" exact component={Cinema}/>
-        <Route path="/commemorate" exact component={Comemorate}/>
+        <Route path="/memoryBook" exact component={MemoryBook}/>
         <ContextProvider>
         <Route path="/chatRoom" exact component={ChatRoom}/>
         </ContextProvider>

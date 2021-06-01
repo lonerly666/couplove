@@ -11,7 +11,6 @@ const mongoURI = 'mongodb://localhost:27017/couplove';
 const storage = new GridFsStorage({
   url: mongoURI,
   file: (req, file) => {
-    console.log(req.body.custom);
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
         if (err) {

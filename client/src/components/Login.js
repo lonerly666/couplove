@@ -9,7 +9,7 @@ export default function Login(){
         window.location.href = "/auth/google";
     }
 
-    return <div>
+    return <div className="login-page-div">
         <div className="login-page">
         <div className="title"><h1>Welcome to Couplove!</h1></div>
         <Button variant="contained" onClick={handleGoogleClick} className="login-btn">

@@ -128,17 +128,22 @@ export default function Home()
           }
         })
       }
-    return <div>
+    return <div className="home-div">
       <Navbar handleSendReq={handleSendReq} formRef = {formRef}/>
       
-
+        <div className="home-panel">
         <Activity title={"Chat"} desc={"Chat with your loved ones"} link={"/chatRoom"} />
         <Activity title={"Cinema"} desc={"Watch Movie Together!"} link ={"/cinema"}/>
+        <Activity title={"Memory Book"} desc={"Keep your beautiful moment together"} link ={"/memoryBook"}/>
+        </div>
+        
         <input type="submit" value="logout" onClick={handleLogout}/>
 
         <form onSubmit={acceptPartner} ref={acceptRef}>
         <input type="text" id="reqId" name="senderId"/>
         <input type="submit"/>
         </form>
+        <div class="foreground"></div>
     </div>
+    
 }
