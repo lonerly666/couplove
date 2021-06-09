@@ -1,0 +1,32 @@
+.req-list-div{
+    position: absolute;
+    border-radius: 20px;
+    background-color: rgb(102, 27, 52);
+    height: 500px;
+    width: 300px;
+    top:60px;
+    left: -40px;
+}
+.info-div{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(150, 48, 48, 0.966);
+}
+.info-sender-profile-div{
+    float:left;
+    height: 50%;
+    width: 50px;
+    margin-left: 10px;
+}
+#info-sender-avatar{
+    width: 90%;
+    height:90%;
+}
+.info-sender-desc{
+    margin-left: 20px;
+}
+#info-req-option{
+    color:white;
+}

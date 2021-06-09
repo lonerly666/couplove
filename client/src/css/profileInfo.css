@@ -17,6 +17,7 @@ html
     border-radius: 30px;
     background-color: white;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    position:relative;
 }
 #overlay
 {
@@ -34,7 +35,7 @@ html
 {
     position:absolute;
     left:50%;
-    top:78px;
+    top:-10px;
     transform:translate(-50%,-50%);
     z-index: 3;
     height:150px;

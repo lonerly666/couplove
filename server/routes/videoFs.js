@@ -21,7 +21,6 @@ conn.once('open', () => {
 const upload = multer({storage:videoStorage});
 
 router.post('/upload',upload.single('video'),(req,res)=>{
-  console.log(req.file.id);
     res.send({status:true});
 })
 
@@ -56,6 +55,18 @@ router.get('/getAllVideos',upload.none(),async(req,res)=>{
        })
          
     });
+})
+
+router.post('/deleteVideo',upload.none(),async(req,res)=>{
+  const id = new mongoose.mongo.ObjectId(req.body.videoId)
+  await vfs.remove({_id:id, root: 'videoUpload' },(err, gridStore)=>{
+    if(err)
+    {
+      res.send(err);
+      return null;
+    }
+    res.send(true);
+  })
 })
 
 

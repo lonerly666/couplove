@@ -63,11 +63,10 @@ const ContextProvider = ({ children }) => {
      
 
    socket.on('returnDiv',e=>{
-      document.getElementById("container").style.left = "50%"
-      document.getElementById("container").style.width = "80%";
-      document.getElementById("chat").style.width = "1000px";
-      document.getElementById("video-div").style.display = "none";
-
+      document.getElementById('chat-body').style.marginRight = "auto";
+      document.getElementById('chat-body').style.marginLeft = "auto";
+      document.getElementById("video-div").style.visibility = "hidden";
+      
    })
 
    socket.on('calluser',async ({ from, name: callerName, signal })=> {
@@ -76,10 +75,9 @@ const ContextProvider = ({ children }) => {
   });
 
    socket.on('moveDiv',e=>{
-      document.getElementById("container").style.left = "36%"
-      document.getElementById("container").style.width = "70%";
-      document.getElementById("chat").style.width = "800px";
-      document.getElementById("video-div").style.display = "block";
+    document.getElementById('chat-body').style.marginRight = "auto";
+    document.getElementById('chat-body').style.marginLeft = "10px";
+    document.getElementById("video-div").style.visibility = "visible";
       
       
    })
@@ -132,10 +130,9 @@ const ContextProvider = ({ children }) => {
     setCallEnded(true);
     if(isCaller)
     {
-      document.getElementById("container").style.left = "50%"
-      document.getElementById("container").style.width = "70%";
-      document.getElementById("chat").style.width = "800px";
-      document.getElementById("video-div").style.visibility = "none";
+      document.getElementById('chat-body').style.marginRight = "auto";
+      document.getElementById('chat-body').style.marginLeft = "auto";
+      document.getElementById("video-div").style.visibility = "hidden";
     }
     setIsCalling(false);
     window.location.reload();
@@ -200,10 +197,9 @@ const ContextProvider = ({ children }) => {
     setCallEnded(true);
     if(isCaller)
     {
-      document.getElementById("container").style.left = "50%"
-      document.getElementById("container").style.width = "70%";
-      document.getElementById("chat").style.width = "800px";
-      document.getElementById("video-div").style.visibility = "none";
+      document.getElementById('chat-body').style.marginRight = "auto";
+      document.getElementById('chat-body').style.marginLeft = "auto";
+      document.getElementById("video-div").style.visibility = "hidden";
     }
     connectionRef.current.destroy();
 

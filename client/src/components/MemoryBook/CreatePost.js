@@ -47,10 +47,12 @@ export default function CreatePost(props)
             {
               setText(postData.post.text);
               setFeeling(postData.post.feeling);
+              if(postData.post.fileId){
               setUploadedFiles(postData.post.fileId.map((id,index)=>{
                 // console.log(postData.url[index]);
                 return {src:postData.url[index],width:1,height:1,fileId:id};
               }))
+            }
             }
           },[])
 
@@ -118,7 +120,7 @@ export default function CreatePost(props)
               formdata.append('fileInput[]', uploadedFiles[j].fileId);
             }
           }
-          axios({
+          await axios({
             method:'post',
             url:'/post/editPost',
             data:formdata,

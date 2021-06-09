@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 .activity-panel{
     font-size: 20px;
     position: relative;
@@ -29,5 +30,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(255, 0, 47);
     border-bottom: 1px solid rgba(219, 217, 217, 0.596);
+    border-radius:  10px 10px 0px 0px;
+    font-family: 'Rock Salt', cursive;
 }

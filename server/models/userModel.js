@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema ({
   dateOfBirth: Date,
   bio:String,
   gender: String,
-  numOfPosts: {type: Number, default: 0},
+  dateOfRelationship:Date,  
   partner: ObjectId,
 });
 

@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
 .login-page-div{
     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png');
 	 background-position: center bottom;
 	 background-repeat: no-repeat;
 	 background-size: 100% auto;
      height: 100vh;
+     font-family: 'Dancing Script', cursive;
+     font-size: 40px;
+     color: rgb(255, 249, 249);
 }
 .login-page
 {
@@ -21,9 +26,13 @@
     align-items: center;
     justify-content: center;
 }
-.login-btn
+#home-login-btn
 {
-    margin-top: 200px;
+    background-color: rgb(219, 173, 114);
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+    font-size: 17px;
+    color: black;
     width:500px;
     height:70px;
 }

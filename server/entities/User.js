@@ -21,7 +21,7 @@ class User{
             const gender = build.gender;
             const partner = build.partner;
             const bio = build.bio;
-            const numOfPost = build.numOfPost;
+            const dateOfRelationship = build.dateOfRelationShip;
             Object.defineProperties(this,{
                 nickname:{
                     value:nickname,
@@ -39,8 +39,8 @@ class User{
                     value:bio,
                     writable:false
                 },
-                numOfPost:{
-                    value:numOfPost,
+                dateOfRelationship:{
+                    value:dateOfRelationship,
                     writable:false
                 },
                 partner:{
@@ -77,8 +77,8 @@ class User{
                 this.bio = bio;
                 return this;
             }
-            setNumOfPost(numOfPost){
-                this.numOfPost = numOfPost;
+            setDateOfRelationship(dateOfRelationShip){
+                this.dateOfRelationShip = dateOfRelationShip;
                 return this;
             }
             build(){

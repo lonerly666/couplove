@@ -17,10 +17,9 @@ export default function VideoRespond(props)
 
    async function answer()
     {
-        document.getElementById("container").style.left = "36%"
-        document.getElementById("container").style.width = "70%";
-        document.getElementById("chat").style.width = "800px";
-        document.getElementById("video-div").style.display = "block";
+        document.getElementById('chat-body').style.marginRight = "auto";
+        document.getElementById('chat-body').style.marginLeft = "10px";
+        document.getElementById("video-div").style.visibility = "visible";
         answerCall();
         
     }

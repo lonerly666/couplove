@@ -5,10 +5,17 @@
     padding:0;
     text-rendering: optimizeLegibility !important; 
 }
-.home-div{
-     height: 100vh;
-     font-family: 'Montserrat', sans-serif; 
-     background-color: #D500F9;
+body{
+    overflow:hidden;
+}
+.home-background{
+    margin-top: 80px;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    height: 100vh;
+    
 }
 .home-panel{
     display: grid;
@@ -19,18 +26,212 @@
     padding-left: 4em;
     padding-right: 4em; 
     max-width: 100vw;
-    color: #ffd79d
+    color: whitesmoke;
 }
-/* .foreground {
+.home-overlay{
+    position:relative;
+    height: 100vh;
+    background-color: rgba(2, 2, 2, 0.349);
+    z-index: 10;
+    display: grid;
+    grid-template-areas: 'days days days days days'
+                        'anniverse anniverse special special special';
+    grid-gap: 20px;
+}
+.home-widget{
+    border:1px solid white;
+    border-radius: 10px;
+    height: 300px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    transition: .3s linear;
+}
+
+.anniverse{
+    grid-area: anniverse;
+}
+.days{
+    margin-top: 20px;
+    grid-area: days;
+    width: 90%;
+    position:relative;
+}
+.special{
+    grid-area: special;
+}
+.foreground {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-foreground.png');
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: 100% auto;
-} */
+    margin-top: 80px;
+}
+.home-noWidget{
+    position:relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#home-add-widget{
+    width: 100px;
+    height: 100px;
+    color: whitesmoke;
+    border:1px solid white;
+}
+.home-add-hover{
+    position:absolute;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    color: whitesmoke;
+    width: 100%;
+    bottom: 0px;
+    transition: .2s linear;
+}
+.home-setDate{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    border-radius: 10px;
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.692);
+}
+.home-setDate-title{
+    position:absolute;
+    top:0;
+    width: 100%;
+    text-align: center;
+}
+#home-submit-day{
+    position:absolute;
+    bottom: 10px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 200px;
+}
+.home-totalDay-widget{
+    color:whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    letter-spacing: 10px;
+}
+
+.home-dob-div{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 'you partner';
+    color: whitesmoke;
+    position:relative;
+}
+.you{
+    width: 100%;
+    height: 100%;
+    grid-area: you;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+}
+.partner{
+    grid-area: partner;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+}
+.home-bday-name{
+    width: 100%;
+    position: absolute;
+    top:10px;
+    text-align: center;
+}
+.home-bday-border{
+    width: 80%;
+    border:1px solid white;
+    margin-top:30px;
+    height: 200px;
+    border-radius: 10px;
+    text-align: center;
+}
+.home-bday-calander{
+    width: 100%;
+    margin-top: 10px;
+}
+.home-event-div{
+    width: 100%;
+    height: 100%;
+
+}
+.home-event-title{
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    color: whitesmoke;
+}
+.home-event-day{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    font-size: 30px;
+}
+.home-noPartner{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(44, 40, 40);
+    border-radius: 10px;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+}
+#home-delete-dayWidget{
+    position:absolute;
+    color:white;
+    top:0;
+    right:0;
+    visibility: hidden;
+}
+#home-delete-bdayWidget{
+    position:absolute;
+    color:white;
+    top:0;
+    right:0;
+    z-index: 20;
+    visibility: hidden;
+}
+#home-delete-specialWidget{
+    position:absolute;
+    color:white;
+    top:0;
+    right:0;
+    visibility: hidden;
+}

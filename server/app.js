@@ -18,6 +18,7 @@ const gridfsRoutes = require('./routes/gridFs');
 const chatRoutes = require('./routes/chat');
 const videofsRoutes = require('./routes/videoFs');
 const postRoutes = require('./routes/post');
+const widgetRoutes = require('./routes/widget');
 const multer = require('multer');
 const storage = require('./GridFsManger');
 const Grid = require('gridfs-stream');
@@ -84,9 +85,16 @@ io.on('connection', async(socket)=>{
   socket.on('join',async(data,callback)=>{
     roomId = data.roomId;
     socket.join(String(data.roomId));
-    users.push(socket.id);
-    io.to(String(data.roomId)).emit('me',{id:socket.id,users:users});
-    console.log(users);
+    await users.push({id:socket.id,roomId:roomId});
+    let track=[];
+    users.map(user=>{
+      if(user.roomId===roomId)
+      {
+        track.push(user);
+      }
+    })
+    io.to(String(data.roomId)).emit('me',{id:socket.id,users:track});
+    console.log(track);
   });
 
   socket.on('sendMsg',async(msg)=>{
@@ -113,7 +121,14 @@ io.on('connection', async(socket)=>{
   });
 
   socket.on('calling',e=>{
-    if(users.length>1)
+    let current=[];
+    users.map(user=>{
+      if(user.roomId===roomId)
+      {
+         current.push(user);
+      }
+    })
+    if(current.length>1)
     {
     io.to(String(roomId)).emit('start');
     io.to(socket.id).emit('startCalling');
@@ -127,8 +142,8 @@ io.on('connection', async(socket)=>{
     socket.on('disconnect',()=>{
       
       for(let i =0;i<users.length;i++)
-      {
-        if(users[i]===socket.id)
+      { 
+        if(users[i].id===socket.id)
         {
           users.splice(i);
         }
@@ -142,11 +157,16 @@ io.on('connection', async(socket)=>{
     
    
     socket.on("calluser",({signalData,name})=>{
-      let userToCall = users.filter(e=>e!=socket.id);
+      let toCall;
+      users.map(user=>{
+        if(user.roomId===roomId&&user.id!==socket.id)
+        {
+          toCall = user.id;
+        }
+      })
+      let userToCall = toCall;
       io.to(socket.id).emit('moveDiv');
-      console.log(userToCall);
       let from = socket.id;
-      console.log(name);
       io.to(userToCall).emit("calluser",{from,name,signal:signalData});
     });   
 
@@ -168,7 +188,9 @@ io.on('connection', async(socket)=>{
     socket.on('onlineUrl',data=>{
       io.to(String(roomId)).emit('onlineUrl',data);
     })
-
+    socket.on('deletedVideo',e=>{
+      io.to(String(roomId)).emit('refreshPage');
+    })
   });
 
   
@@ -184,4 +206,5 @@ app.use('/user',userRoutes);
 app.use('/gridFs',gridfsRoutes);
 app.use('/chat',chatRoutes);
 app.use('/videoFs',videofsRoutes);
+app.use('/widget',widgetRoutes);
 app.use('/post',postRoutes);

@@ -9,6 +9,8 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { SocketContext } from "../SocketContext";
 import VideoRespond from './VideoRespond';
 import VideoCall from './VideoCall';
+import NavBar from './Navbar';
+
 
 export default function ChatRoom(props)
 {
@@ -22,6 +24,10 @@ export default function ChatRoom(props)
     const [partnerInfo,setPartnerInfo] = useState([]);
     const [isUser,setIsUser] = useState(false);
     const [partnerStatus,setPartnerStatus] = useState();
+    const [havePartner,setHavePartner] = useState(false);
+    const [scrollDir,setScrollDir] = useState(-1);
+    const [backgroundUrl,setBackgroundUrl] = useState('');
+
     // const [isCalling,setIsCalling] = useState();
     const {joinRoom,sendMsg,newMessage,callUser,call,me,callAccepted,onBoth,startCall} = useContext(SocketContext);
 
@@ -33,13 +39,27 @@ export default function ChatRoom(props)
         .then(res => {
             if(res.isLoggedIn)
             {
+              axios.get('/chat/checkExist')
+              .then(res.data)
+              .catch(err=>console.log(err))
+              .then(res=>{
+                if(res.data)
+                {
+                  document.getElementById('msgBox').style.backgroundImage ='url("/chat/getChatBackground")';
+                }
+                else
+                {
+                  document.getElementById('msgBox').style.backgroundImage = 'url("https://wallpapercave.com/wp/wp4779329.png")';
+                }
+              })
+              
               let userId = res.user._id;
               let partner = res.user.partner;
               let nickname = res.user.nickname;
-              console.log(nickname);
               setPartnerInfo(res.partnerInfo)
                 if(res.user.partner!==null)
                 { 
+                  setHavePartner(true);
                   axios({ 
                     method:'get',
                     url:'/user/getRoomId',
@@ -73,9 +93,13 @@ export default function ChatRoom(props)
       setMessages(prevData=>{
         return[...prevData,newMessage]
       })
-      
     },[newMessage]);
-
+    useEffect(()=>{
+      if(scrollDir===-1)
+      {
+        document.getElementById('msgBox').scrollTo(0,document.getElementById('msgBox').scrollHeight);      
+      }
+    },[messages])
     
     function handleSendMsg(event)
     {
@@ -102,35 +126,24 @@ export default function ChatRoom(props)
       await startCall();
       // await callUser();
     };
-    return<div>
+
+
+    return<div className="chat-div">
+      <NavBar havePartner={havePartner}/>
         {call.isReceivingCall &&!callAccepted&&<VideoRespond/>}
      <VideoCall/>
-      
-      <div className="container" id="container">
-     
-		<div className="chat_box">
-			<ChatNav toggleBackHome={toggleBackHome} partnerInfo={partnerInfo} partnerStatus={partnerStatus} toggleVideoCall={toggleVideoCall}/>
-			<div className="body">
-				<div className="incoming">
-          <ScrollToBottom>
-          {messages&&userInfo&&messages.map((chat,index)=>{
-            return <ChatBubble key={index}textInfo={chat} user={userInfo}/>
-          })} 
-
-          </ScrollToBottom>
-          
-				</div>
-				{/* <div class="typing">
-					<div class="bubble">
-						<div class="ellipsis dot_1"></div>
-						<div class="ellipsis dot_2"></div>
-						<div class="ellipsis dot_3"></div>
-					</div>
-				</div> */}
-			</div>
-			<InputBox handleSendMsg={handleSendMsg}/>
-		</div>
-	</div>
-
+     <div className="chat-container">
+     <div className="chat-body" id="chat-body">
+     <ChatNav  toggleBackHome={toggleBackHome} partnerInfo={partnerInfo} partnerStatus={partnerStatus} toggleVideoCall={toggleVideoCall}/>
+    <div className="chat-messageBox-div" id="msgBox">
+        <div className="chat-messageBox">
+      {messages&&userInfo&&messages.map((chat,index)=>{
+              return <ChatBubble key={index}textInfo={chat} user={userInfo}/>
+      })} 
+       </div>
+    </div>
+    <InputBox handleSendMsg={handleSendMsg}/>
+     </div>
+     </div>
   </div>
 }

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 export default function VideoList(props)
 {
-    const {handleChooseMovie} = props;
+    const {handleChooseMovie,socket} = props;
     const [files,setFiles] = useState([]);
     const [dropdown,setDropdown] = useState(false);
     useEffect(()=>{
@@ -16,7 +16,6 @@ export default function VideoList(props)
         .then(res=>res.data)
         .catch(err=>console.log(err))
         .then(res=>{
-            console.log(res);
             let temp = [];
             for(let i=0;i<res.length;i++)
             {
@@ -39,10 +38,38 @@ export default function VideoList(props)
         }
         setDropdown(!dropdown);
     }
+    async function handleDeleteVideo(videoId)
+    {
+        const formdata = new FormData();
+        formdata.append('videoId',videoId);
+        await axios({
+            method:'post',
+            url:'/videoFs/deleteVideo',
+            data:formdata,
+            headers:{'Content-Type': 'multipart/form-data'}
+        })
+        .then(res=>res.data)
+        .catch(err=>console.log(err))
+        .then(res=>{
+            console.log(res);
+            if(res)
+            {
+              setFiles(prev=>{
+                  return prev.filter(file=>{
+                      return file._id!==videoId
+                  })
+              })
+              socket.emit('deletedVideo');
+           }
+        })
+    }
 
     return<div className="video-file" id="video-file">
         {files.map(file=>{
-            return<Button key={file._id} variant="outlined" onClick={()=>handleChooseMovie(file.filename)} id="list">{file.aliases}</Button>    
+            return<div className="video-list-div">
+                <Button key={file._id} variant="outlined" onClick={()=>handleChooseMovie(file.filename)} id="list">{file.aliases}</Button> 
+                <button id="video-delete" onClick={()=>handleDeleteVideo(file._id)}>x</button>
+            </div>  
         })} 
         <IconButton
         size="small"

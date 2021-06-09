@@ -21,6 +21,7 @@ conn.once('open', () => {
 });
 const profile = multer({storage:storage});
 router.post('/info', profile.single('file'), async (req, res) => {
+  console.log(req.body)
   // const profilePic = await GridFsManager.uploadProfilePic(req.body.profile,req.userId);
   const user =
       new User.Builder()
@@ -29,7 +30,8 @@ router.post('/info', profile.single('file'), async (req, res) => {
       .setGender(req.body.gender)
       .setBio(req.body.bio)
       .setPartner(req.body.partner)
-      .build();
+      .setDateOfRelationship(req.body.dateOfRelationship?new Date(req.body.dateOfRelationship):null)
+      .build(); 
   const updatedUser = await UserManager.saveInfo(req.user._id, user);
   
   res.end();
@@ -52,6 +54,7 @@ router.post('/acceptRequest',upload.none(),async(req,res)=>{
   const senderId = req.body.senderId;
   const userId = req.user._id;
   const result = await UserManager.acceptReq(userId,senderId);
+  console.log(result);
   if(result.status){
      const roomInfo = await RoomModel.create({userId:userId,partnerId:senderId});
   

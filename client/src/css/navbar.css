@@ -1,14 +1,98 @@
 .nav-div{
     display: flex;
     align-items: center;
-    justify-content: center;
     text-align: center;
     width: 100vw;
     height:80px;
     position:fixed;
     top:0;
-    background-color: whitesmoke;
+    background-color: rgb(151, 39, 77);
     box-shadow: 
-    0 0 15px 2px rgb(100, 98, 98);
+    0 0 15px 2px rgb(98, 99, 100);
     z-index: 50;
+    color: whitesmoke;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; 
+}
+.nav-title{
+    float:left;
+    width: 100px;
+    cursor: pointer;
+}
+.logout{
+    grid-area: logout;
+}
+.chat{
+    grid-area: chat;
+}
+.cinema{
+    grid-area: cinema;
+}
+.memory{
+    grid-area: memory;
+}
+.nav-activity-div{
+    height: 100%;
+    margin-left: auto;
+    margin-right: 10px;
+    display: grid;
+    grid-template-areas: 'reqlist req chat cinema memory logout';
+    place-items: center;
+}
+.nav-activity{
+    height: 90%;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: .1s linear;
+}
+.nav-activity:hover{
+    background-color: rgb(119, 23, 55);
+    cursor: pointer;
+}
+.nav-activity:active{
+    background-color: rgb(82, 16, 37);;
+}
+.nav-sendRequest{
+    grid-area: req;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+#reqId{
+    border:none;
+    outline:none;
+    background-color:rgb(119, 23, 55);
+    color: whitesmoke;
+    border-radius: 20px;
+    font-size: 20px;
+    height: 50px;
+    text-align: center;
+}
+.nav-submit{
+    margin-left: 5px;
+    height: 30px;
+    width: 30px;
+    outline:none;
+    border:none;
+    background-color: rgb(119, 23, 55);
+    border-radius: 30px;
+    color: whitesmoke;
+    font-size: 20px;
+    cursor:pointer;
+}
+.nav-request{
+    grid-area: reqlist;
+    width: 70px;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
 }

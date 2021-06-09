@@ -17,8 +17,13 @@ export default function MemoryBook()
     const [isEditing,setIsEditing] = useState(false);
     const [isPosting,setIsPosting] = useState(false);
     const [posts,setPosts] = useState([]);
+    const [havePartner,setHavePartner] = useState(false);
 
     const formRef = useRef();
+
+
+   
+
 
     useEffect(()=>{
          axios.get('/auth/isLoggedIn')
@@ -27,6 +32,10 @@ export default function MemoryBook()
         .then(res=>{
             if(res.isLoggedIn)
             {
+                if(res.user.partner!==null)
+                {
+                    setHavePartner(true);
+                }
                 setUserInfo(res.user);
                 setPartnerInfo(res.partnerInfo);
 
@@ -53,9 +62,9 @@ export default function MemoryBook()
         setPostData();
     }
     return <div className="memoryBook">
-        {isPosting&&<CreatePost setPostData={setPostData} setPost={setPosts} postData={postData} handlePost={handlePost} userInfo={userInfo} setIsPosting={setIsPosting} isEditing={isEditing} setIsEditing={setIsEditing}/>}
+        {isPosting&&<CreatePost  setPostData={setPostData} setPost={setPosts} postData={postData} handlePost={handlePost} userInfo={userInfo} setIsPosting={setIsPosting} isEditing={isEditing} setIsEditing={setIsEditing}/>}
         <div className="memoryBook-div" id="memoryBook" style={{opacity:isPosting||isEditing?"0.3":"1"}}>
-            <NavBar/>
+            <NavBar havePartner={havePartner}/>
                 <div className="postDiv">
                     <div className="post-option">
                     <h3>Post Some Memorable Moment Here</h3>

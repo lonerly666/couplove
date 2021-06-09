@@ -1,26 +1,60 @@
 /* head */
+
 .chatNav-div{
+    position:relative;
     background-color: whitesmoke;
     color: black;
-    box-shadow: 
-    0 15px 15px 2px rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(141, 136, 136);
+    border-radius: 20px 20px 0 0 ;
 }
+
+.chatNav-moreOption{
+    position:absolute;
+    width: 130px;
+    height: 180px;
+    background-color: whitesmoke;
+    right: 10px;
+    top:50px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgb(153, 153, 153);
+}
+.chatNav-changeBackground{
+    height: 80px;
+    display: flex;
+    max-width: 90%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    overflow-wrap: break-word;
+    transition: .2s linear;
+    border-radius: 10px;
+}
+.chatNav-changeBackground:hover{
+
+    background:rgb(214, 214, 214);
+    cursor: pointer;
+}
+
+
 .head {
 	display: flex;
 	align-items: center;
-    
+    height: 60px;
 }
-.head .user {
+.user {
 	display: flex;
 	align-items: center;
-	flex-grow: 1;
     font-size: 25px;
+    padding: 10px 10px;
 }
 .name{
-    margin-left: 20px;
+    margin-left: 40px;
 }
+
 .head .user .avatar {
-	margin-left: 450px; 
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -34,6 +68,7 @@
 }
 #bar_tool {
 	display: flex;
+    margin-left: auto;
 }
 #bar_tool i {
 	padding: 5px;

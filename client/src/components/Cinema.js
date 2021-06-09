@@ -54,7 +54,9 @@ export default function Cinema()
         socket.on('changeState',state=>{
             setPlay(state);
         });
-
+        socket.on('refreshPage',e=>{
+            window.location.reload();
+        })
         socket.on('update',time=>{
             console.log(time);
             if(urlRef.current==="")
@@ -208,8 +210,8 @@ export default function Cinema()
         }
         setIsFullScreen(!isFullScreen);
     }
-    return <div>
-        <VideoList handleChooseMovie={handleChooseMovie}/>
+    return <div className="cinema-div">
+        <VideoList handleChooseMovie={handleChooseMovie} socket={socket}/>
         <VideoUploadDiv/>
         <div className="submit-url" id="submitUrl">
             <form onSubmit={submitUrl}>
@@ -255,7 +257,7 @@ export default function Cinema()
                 <IconButton onClick={handleVideoState} id="control-btn" style={{color:"black"}}>{play?<PauseIcon/>:<PlayArrowIcon/>}</IconButton>
                 <IconButton onClick={handleMute} id="control-vlm" style={{color:"black"}}>{isMuted?<VolumeOffIcon/>:isLoud?<VolumeUpIcon/>:<VolumeMuteIcon/>}</IconButton>
                 <input type="range" min="0" max="100" id="volume" onChange={handlePlayerVolume}/>
-                <div id="progress-bar" className="progress-bar status" onClick={handleProgressChange}>
+                <div id="progress-bar" className="progress-bar status" onClick={ready?handleProgressChange:""}>
                 <div id="progress-point" className="progress-point"></div>
                 </div>
                 <IconButton onClick={handleBigScreen} id="fullscreen-btn" style={{color:"black"}}>{isFullScreen?<FullscreenExitIcon/>:<FullscreenIcon/>}</IconButton>

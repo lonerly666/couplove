@@ -22,6 +22,29 @@ conn.once('open', () => {
 
 
 const upload = multer({storage:videoStorage});
+
+
+router.get('/getOtherProfile/:id',(req,res)=>{
+  console.log("I")
+  const id = new mongoose.mongo.ObjectId(req.params.id)
+  gfs.files.findOne({metadata:id},(err,file)=>{
+    if(!file||file.length===0)
+    {
+      res.send(null);
+      return null;
+    }
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  })
+})
+
 router.get('/getProfile', (req, res) => {
     gfs.files.findOne({ metadata:req.user._id }, (err, file) => {
       // Check if file

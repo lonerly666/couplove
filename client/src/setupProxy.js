@@ -147,6 +147,12 @@ module.exports = function(app) {
       target: 'http://localhost:5000',
       changeOrigin: true,
     })
+  );app.use(
+    '/videoFs/deleteVideo',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
   );
   app.use(
     '/post/getPosts',
@@ -178,6 +184,62 @@ module.exports = function(app) {
   );
   app.use(
     '/post/deletePost',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/widget/createWidget',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/widget/getWidget',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/gridFs/getOtherProfile/:id',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/widget/deleteWidget',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/chat/uploadChatImg',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/chat/deleteBackground',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/chat/getChatBackground',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/chat/checkExist',
     createProxyMiddleware({
       target: 'http://localhost:5000',
       changeOrigin: true,

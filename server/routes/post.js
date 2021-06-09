@@ -64,6 +64,7 @@ router.get('/getPostImage/:fileId',upload.none(),async(req,res)=>{
 
 router.post('/editPost',upload.array('fileInput[]'),async(req,res)=>{
   // console.log(req.body);
+  const existingFileId = req.body.fileInput?req.body.fileInput:[];
   const newFileId =[];
   if(req.body.deletedFile)
   {
@@ -81,12 +82,12 @@ router.post('/editPost',upload.array('fileInput[]'),async(req,res)=>{
   {
     for(let i=0;i<req.files.length;i++)
     {
-      req.body.fileInput.push(req.files[i].id);
+      existingFileId.push(req.files[i].id);
       newFileId.push(req.files[i].id);
     }
   }
   const post = new Post.Builder()
-  .setFileId(req.body.fileInput)
+  .setFileId(existingFileId)
   .setText(req.body.text)
   .setFeeling(req.body.feeling)
   const editedPost = await PostManager.editPost(req.body.postId,post);
@@ -104,14 +105,17 @@ router.post('/editPost',upload.array('fileInput[]'),async(req,res)=>{
 });
 
 router.post('/deletePost',upload.none(),async(req,res)=>{
-  for(let i =0;i<req.body.fileId.length;i++)
+  if(req.body.fileId)
   {
-    let id = new mongoose.mongo.ObjectId(req.body.fileId[i]);
-    gfs.remove({ _id: id, root: 'postImage' }, (err, gridStore) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    for(let i =0;i<req.body.fileId.length;i++)
+    {
+      let id = new mongoose.mongo.ObjectId(req.body.fileId[i]);
+      gfs.remove({ _id: id, root: 'postImage' }, (err, gridStore) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
   }
   const result = await PostManager.deletePost(req.body.postId)
   res.send(result);

@@ -9,7 +9,7 @@ export default function InputBox(props)
 
 
     return<div className="foot">
-        <form onSubmit={handleSendMsg}>
+        <form onSubmit={handleSendMsg} className="input-form">
         <InsertEmoticonIcon id="emoji-btn"/>
         <input type="text" className="msg" placeholder="Type a message..." id="chat"/>
         <IconButton type="submit" id="sendIcon"><SendIcon/></IconButton>

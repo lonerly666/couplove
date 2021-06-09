@@ -21,6 +21,7 @@ class UserManager{
             gender:user.gender,
             bio: user.bio,
             partner:user.partner,
+            dateOfRelationship:user.dateOfRelationship
         }
     }
     static async getUser(userId) {
@@ -114,7 +115,7 @@ class UserManager{
                 await UserModel.findByIdAndUpdate(senderId,{partner:userId});
                 await UserModel.findByIdAndUpdate(userId,{partner:senderId});
                 return{
-                    status:true
+                    status:true 
                 }
             }
             else
@@ -131,6 +132,22 @@ class UserManager{
                 status:false
             }
         }
+    }
+
+    static async addDateOfRelation(userId,partnerId,date)
+    {
+       try
+       {
+           const result= await UserModel.findByIdAndUpdate(userId,{dateOfRelationship:date});
+           await UserModel.findByIdAndUpdate(partnerId,{dateOfRelationship:date});
+           return result;
+       }
+       catch(err)
+       {
+        console.log(err);
+        return err;
+       }
+        
     }
 }
 

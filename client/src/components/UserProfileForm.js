@@ -45,6 +45,7 @@ export default function UserProfileForm()
     const [gender,setGender] = useState('male');
     const [newProfile,setNewProfile]=useState(false);
     const [partner,setPartner] = useState();
+    const [dateOfRelationship,setDateOfRelationship] = useState();
     const formRef = useRef();
     const classes = useStyles();
 
@@ -66,6 +67,10 @@ export default function UserProfileForm()
             if(res.user.partner!==null)
             {
             setPartner(res.user.partner);
+            if(res.user.dateOfRelationship)
+            {
+                setDateOfRelationship(res.user.dateOfRelationship);
+            }
             }
           }
         })
@@ -108,6 +113,7 @@ export default function UserProfileForm()
       async function handleSubmit(event) {
         if(uploaded){axios.get('/gridFs/deleteImg');}
         event.preventDefault();
+        
         const formData = new FormData(formRef.current); 
         partner&&formData.append('partner',partner);
          await  axios({
@@ -186,7 +192,7 @@ export default function UserProfileForm()
             </Select>
           </FormControl> 
           <br />
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} style={{marginLeft:"10px"}}>
             <KeyboardDatePicker
               margin="normal"
               id="dateOfBirth"
@@ -200,6 +206,20 @@ export default function UserProfileForm()
               }}
             />
           </MuiPickersUtilsProvider>
+          {dateOfRelationship&&<MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              margin="normal"
+              id="dateOfRelation"
+              label="Date of relationship"
+              name="dateOfRelationship"
+              format="MM/dd/yyyy"
+              value={dateOfRelationship}
+              onChange={(date) => {setDateOfRelationship(date)}}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>}
           
           <br/>    
         

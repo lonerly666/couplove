@@ -1,4 +1,8 @@
 
+.memoryBook{
+    height: 100vh;
+    overflow-y: scroll;
+}
 .memoryBook-div {
     background-color: #F0F2F5;
     flex: 1;
@@ -6,6 +10,9 @@
     min-height: 100%;
     padding-top: 6em;
     padding-bottom: 3em;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 100px;
 }
 .postDiv{
     width: 100%;

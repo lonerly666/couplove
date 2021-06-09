@@ -12,13 +12,46 @@ export default function MemoryPost(props)
     const{post,userId,setIsEditing,setPostData,setIsPosting,setPost} = props
     const [openMore,setOpenMore] = useState(false);
     const [url,setUrl] = useState([]);
+
+    const emojiMap={
+        "happy": "😀",
+        "sad": "☹️",
+        "surprise": "😮",
+        "meh": "😕",
+        "annoyed": "🙄",
+        "sleepy": "😴",
+        "love": "🥰",
+        "touched": "😭",
+        "shy": "😌",
+        "amazed": "🤩"
+    }
+
+    const monthMap = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+      }
+    
+
     useEffect(async()=>{
+        if(post.fileId)
+        {
         let temp =[];
        await post.fileId.map(id=>{
             let url = "/post/getPostImage/"+id;
             temp.push(url);
         })
         setUrl(temp);
+        }
     },[post])
     
     function constructGalleryUrls(fileId)
@@ -34,14 +67,18 @@ export default function MemoryPost(props)
         setPostData({post:post,url:url});
         setIsEditing(true);
         setIsPosting(true);
+        setOpenMore(false);
     }
     async function deletePost()
     {
         const formdata = new FormData();
         formdata.append('postId',post._id);
-        for(let i=0;i<post.fileId.length;i++)
+        if(post.fileId)
         {
-            formdata.append('fileId[]',post.fileId[i])
+            for(let i=0;i<post.fileId.length;i++)
+            {
+                formdata.append('fileId[]',post.fileId[i])
+            }
         }
         await axios({
             method:'post',
@@ -67,6 +104,15 @@ export default function MemoryPost(props)
             }
         })
     }
+
+    function formatDate(date) {
+        const today = new Date(parseInt(Date.parse(date), 10));
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        return dd + " " + monthMap[mm]+" "+yyyy
+      }
+
     return<div className="post-div">
         {openMore&&<div className="post-more-div">
             <div className="post-more-option edit" onClick={handleEdit}>
@@ -78,14 +124,14 @@ export default function MemoryPost(props)
             </div>}
         <IconButton id="post-more" onClick={()=>setOpenMore(!openMore)}><MoreHorizIcon fontSize="medium"/></IconButton>
         <div className="post-header">
-            {userId===post.creatorId?<ReactAvatar src="/gridFs/getProfile" id="post-avatar"/>:<ReactAvatar src="/gridFs/getPartnerProfile" id="post-avatar"/>}
+            {userId===post.userId?<ReactAvatar src="/gridFs/getProfile" id="post-avatar"/>:<ReactAvatar src="/gridFs/getPartnerProfile" id="post-avatar"/>}
            <div className="post-desc">
             <div className="post-feeling">
                 <h3>{post.nickname}</h3>
-                <h3> &nbsp;• &nbsp;is feeling {post.feeling}</h3>  
+                {post.feeling&&<h3> &nbsp;• &nbsp;is feeling {post.feeling}&nbsp;{emojiMap[post.feeling]}</h3>}  
             </div>
               <div className="post-time">
-                <p>{post.timeOfCreation}</p>
+                <p>{formatDate(post.timeOfCreation)}</p>
               </div>
             </div> 
         </div>
@@ -93,9 +139,9 @@ export default function MemoryPost(props)
         {post.text}
         </div>
         <div className="post-images">
-            <div className="post-img-div">
+        {post.fileId&&
             <ImageGallery items={constructGalleryUrls(post.fileId)} showFullscreenButton={false} showPlayButton={false} showThumbnails={false} className="post-gallery" />
-            </div>
+        }
         </div>
     </div>
 }
