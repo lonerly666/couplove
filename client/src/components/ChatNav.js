@@ -1,9 +1,8 @@
 import '../css/chatNav.css';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import VideocamIcon from '@material-ui/icons/Videocam';
-import PhoneIcon from '@material-ui/icons/Phone';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import PhotoIcon from '@material-ui/icons/Photo';
 import { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
 
@@ -57,8 +56,8 @@ export default function ChatNav(props)
 		{isOnline&&<h1>ONLINE</h1>}
 		{openMore&&<div className="chatNav-moreOption">
 			<div className="chatNav-changeBackground" onClick={()=>document.getElementById('chatNav-file').click()}> 
-				Change Background Image
-				<input type="file" name="file" hidden id="chatNav-file" onChange={toggleChangeBackground}/>
+				<PhotoIcon/>
+				<input type="file" name="file" hidden id="chatNav-file" onChange={toggleChangeBackground}/>	
 			</div>
 		</div>}
         <div className="head">

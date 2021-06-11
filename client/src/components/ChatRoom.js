@@ -5,7 +5,7 @@ import InputBox from './InputBox';
 import '../css/chatroom.css';
 import ChatNav from './ChatNav';
 import ChatBubble from './ChatBubble';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import { SocketContext } from "../SocketContext";
 import VideoRespond from './VideoRespond';
 import VideoCall from './VideoCall';
@@ -14,7 +14,6 @@ import NavBar from './Navbar';
 
 export default function ChatRoom(props)
 {
-    const ENDPOINT = 'localhost:5000';
     const [userInfo,setUserInfo] = useState();
     const [userId,setUserId] = useState();
     const [roomId,setRoomId] = useState();
@@ -22,14 +21,12 @@ export default function ChatRoom(props)
     const [userNickname,setUserNickname] = useState();
     const [messages,setMessages] = useState([]);
     const [partnerInfo,setPartnerInfo] = useState([]);
-    const [isUser,setIsUser] = useState(false);
     const [partnerStatus,setPartnerStatus] = useState();
     const [havePartner,setHavePartner] = useState(false);
     const [scrollDir,setScrollDir] = useState(-1);
-    const [backgroundUrl,setBackgroundUrl] = useState('');
 
     // const [isCalling,setIsCalling] = useState();
-    const {joinRoom,sendMsg,newMessage,callUser,call,me,callAccepted,onBoth,startCall} = useContext(SocketContext);
+    const {joinRoom,sendMsg,newMessage,call,callAccepted,startCall} = useContext(SocketContext);
 
     useEffect(()=>{
         const ac = new AbortController();
@@ -46,6 +43,7 @@ export default function ChatRoom(props)
                 if(res.data)
                 {
                   document.getElementById('msgBox').style.backgroundImage ='url("/chat/getChatBackground")';
+                  document.getElementById('msgBox').style.backgroundSize ='cover';
                 }
                 else
                 {

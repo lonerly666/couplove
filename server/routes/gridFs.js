@@ -25,7 +25,6 @@ const upload = multer({storage:videoStorage});
 
 
 router.get('/getOtherProfile/:id',(req,res)=>{
-  console.log("I")
   const id = new mongoose.mongo.ObjectId(req.params.id)
   gfs.files.findOne({metadata:id},(err,file)=>{
     if(!file||file.length===0)

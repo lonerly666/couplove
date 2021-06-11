@@ -21,7 +21,6 @@ conn.once('open', () => {
 });
 const profile = multer({storage:storage});
 router.post('/info', profile.single('file'), async (req, res) => {
-  console.log(req.body)
   // const profilePic = await GridFsManager.uploadProfilePic(req.body.profile,req.userId);
   const user =
       new User.Builder()

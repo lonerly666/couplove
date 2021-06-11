@@ -4,7 +4,7 @@
 }
 html
 {
-    background-color: whitesmoke;
+    background-color: rgb(151, 39, 77);
 }
 .infoForm
 {
@@ -42,7 +42,7 @@ html
     width:150px;
     border-radius: 130px;
     overflow: hidden;
-    border:10px solid whitesmoke;        
+    border:10px solid rgb(151, 39, 77);       
 }
 #avatar img
 {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-import ScrollMenu from 'react-horizontal-scrolling-menu';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import IconButton from '@material-ui/core/IconButton';
@@ -59,18 +58,21 @@ export default function VideoList(props)
                       return file._id!==videoId
                   })
               })
-              socket.emit('deletedVideo');
+              if(socket)socket.emit('deletedVideo');
            }
         })
     }
 
     return<div className="video-file" id="video-file">
+        <div className="video-scroll">
         {files.map(file=>{
             return<div className="video-list-div">
+                
                 <Button key={file._id} variant="outlined" onClick={()=>handleChooseMovie(file.filename)} id="list">{file.aliases}</Button> 
                 <button id="video-delete" onClick={()=>handleDeleteVideo(file._id)}>x</button>
             </div>  
         })} 
+        </div>
         <IconButton
         size="small"
         id="drop-down"

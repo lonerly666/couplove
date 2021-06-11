@@ -1,7 +1,8 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Monda&display=swap');
 .memoryBook{
     height: 100vh;
     overflow-y: scroll;
+    font-family: 'Monda', sans-serif;
 }
 .memoryBook-div {
     background-color: #F0F2F5;

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 *{
     margin:0;
     padding:0;
@@ -10,7 +11,7 @@ body{
 }
 .home-background{
     margin-top: 80px;
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png');
+    /* background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png'); */
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: 100% auto;
@@ -47,6 +48,7 @@ body{
     margin-right: auto;
     position: relative;
     transition: .3s linear;
+    font-family: 'Indie Flower', cursive;
 }
 
 .anniverse{
@@ -74,6 +76,7 @@ body{
     background-repeat: no-repeat;
     background-size: 100% auto;
     margin-top: 80px;
+    visibility: hidden;
 }
 .home-noWidget{
     position:relative;

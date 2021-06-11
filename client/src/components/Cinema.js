@@ -14,6 +14,7 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import HomeIcon from '@material-ui/icons/Home';
+
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import io from 'socket.io-client';
 import { useEffect, useRef, useState } from 'react';
@@ -33,10 +34,13 @@ export default function Cinema()
   const [isMuted,setIsMuted] = useState(false);
   const [isLoud,setIsLoud] = useState(false);
   const [isFullScreen,setIsFullScreen] = useState(false);
+
   const videoRef = useRef();
   const urlRef = useRef("");
   const readyToPlay = useRef(false);
   const initialRun = useRef(true);
+
+
   useEffect(async()=>{
       const ac = new AbortController();
         socket = io(ENDPOINT);
@@ -58,7 +62,6 @@ export default function Cinema()
             window.location.reload();
         })
         socket.on('update',time=>{
-            console.log(time);
             if(urlRef.current==="")
             {
                 urlRef.current = time.url;
@@ -89,7 +92,6 @@ export default function Cinema()
                 return;
             }
             setReady(true);
-            console.log(data)
             urlRef.current=data;
             setUrl(data);
             document.getElementById('url').value = "";
@@ -212,6 +214,7 @@ export default function Cinema()
     }
     return <div className="cinema-div">
         <VideoList handleChooseMovie={handleChooseMovie} socket={socket}/>
+        
         <VideoUploadDiv/>
         <div className="submit-url" id="submitUrl">
             <form onSubmit={submitUrl}>

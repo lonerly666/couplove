@@ -245,4 +245,25 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    '/home/upload',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/home/getBackground',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    '/home/checkExist',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
 };

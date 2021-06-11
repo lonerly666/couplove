@@ -10,7 +10,7 @@ import axios from 'axios';
 
 export default function RequestInfo(props)
 {
-    const {reqInfo,setHavePartner} = props;
+    const {reqInfo,setHavePartner,setRequestList} = props;
     const url = "/gridFs/getOtherProfile/"+reqInfo.senderId;
 
 
@@ -30,9 +30,43 @@ export default function RequestInfo(props)
       .then(res=>{
         if(res.result)
         {
+          setRequestList(prev=>{
+            return prev.filter(info=>{
+              return info.senderId!==reqInfo.senderId
+            })
+          })
           setHavePartner(true);
         }
       })
+    }
+    async function declinePartner(event)
+    {
+      event.preventDefault();
+      const formdata = new FormData();
+      formdata.append('senderId',reqInfo.senderId)
+      await axios({
+        method:'post',
+        url:'/user/declineUser',
+        data:formdata,
+        header:{'Content-Type': 'multipart/form-data'}
+      })
+      .then(res=>res.data)
+      .catch(err=>console.log(err))
+      .then(res=>{
+        if(res)
+        {
+          setRequestList(prev=>{
+            return prev.filter(info=>{
+              return info.senderId!==reqInfo.senderId
+            })
+          })
+        }
+        else
+        {
+          alert("Opps something wrong with the server")
+        }
+      })
+      
     }
 
     return <div className="info-div">
@@ -45,7 +79,7 @@ export default function RequestInfo(props)
         <div className="info-sender-desc">
             {reqInfo.senderNickname} wants to be your partner<br/>
             <IconButton id="info-req-option" onClick={acceptPartner} ><CheckIcon/></IconButton>
-            <IconButton id="info-req-option"><ClearIcon/></IconButton>
+            <IconButton id="info-req-option" onClick={declinePartner}><ClearIcon/></IconButton>
         </div>
     </div>
 }

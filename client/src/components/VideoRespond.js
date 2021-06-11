@@ -9,7 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 export default function VideoRespond(props)
 {
 
-    const{answerCall,leaveCall,call,initializeVideo,callUser,declineCall,isCaller,isAnswered} = useContext(SocketContext);
+    const{answerCall,call,declineCall} = useContext(SocketContext);
 
 
    

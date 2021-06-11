@@ -40,6 +40,10 @@ class UserManager{
             const receiverInfo = await UserModel.findById(partnerId);
             if(receiverInfo)
             {
+                if(receiverInfo.partner!==null)
+                {
+                    return{status:"This person has a partner already!"}
+                }
                 if(String(userId)===String(receiverInfo._id))
                 {
                     return{status:"You can't add yourself as a partner"}

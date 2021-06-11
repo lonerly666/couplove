@@ -104,6 +104,11 @@ export default function CreatePost(props)
 
       async function togglePost()
       {
+        if(text==='')
+        {
+          alert("Please enter some text");
+          return;
+        }
         const formdata = new FormData(formRef.current);
         if(isEditing)
         { 

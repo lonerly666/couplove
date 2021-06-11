@@ -1,9 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import axios from 'axios';
-import ReactAvatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Activity from './ActivityPane';
 import Navbar from '../components/Navbar';
 import '../css/home.css';
 import { IconButton } from '@material-ui/core';
@@ -16,29 +13,18 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    minWidth: "100%",
-  },
-  large: {
-    width: theme.spacing(17),
-    height: theme.spacing(17),
-  },
-}));
+
 export default function Home()
 {
   const [userInfo,setUserInfo] = useState();
   const [partnerInfo,setPartnerInfo]= useState();
   const [havePartner,setHavePartner] = useState(false);
-  const [roomId,setRoomId] = useState();
-  const [reqId,setReqId] = useState();
   const [requestList,setRequestList]= useState([]);
   const [dayWidget,setDayWidget] = useState(false);
   const [specialWidget,setSpecialWidget] = useState(false);
   const [bdayWidget,setBdayWidget] = useState(false);
   const [dateOfRelation,setDateOfRelation] = useState(false);
   const [isSetting,setIsSetting] = useState(false);
-  const [date,setDate] = useState(new Date());
   const [totalDay,setTotalDay] = useState();
   const [userBday,setUserBday] = useState();
   const [partnerBday,setPartnerBday] = useState();
@@ -46,11 +32,13 @@ export default function Home()
   const [partnerCountDown,setPartnerCountDown] = useState();
   const [upComingEvent,setUpComingEvent] = useState();
   const [upComingDay,setUpComingDay] = useState();
-
+  const [backgroundUrl,setBackgroundUrl] = useState('');
+  const [isHome,setIsHome] = useState(true);
 
   const formRef = useRef();
   const acceptRef = useRef();
   const dateRef = useRef();
+  
 
   const monthMap = {
     "01": "January",
@@ -87,6 +75,23 @@ export default function Home()
             }
             else
             {
+
+              axios.get('/home/getBackground')
+              .then(res=>res.data)
+              .catch(err=>console.log(err))
+              .then(res=>{
+                if(!res)
+                {
+                  setBackgroundUrl('https://s3-us-west-2.amazonaws.com/s.cdpn.io/751678/my-illustration-background.png');
+                  document.getElementById('foreground').style.visibility="visible";
+                }
+                else
+                {
+                  setBackgroundUrl('/home/getBackground');
+                  document.getElementById('foreground').style.visibility="hidden";
+                }
+              })
+
               let anniverse = new Date(res.user.dateOfRelationship);
               let month = anniverse.getMonth()+1;
               let day = anniverse.getDate();
@@ -129,6 +134,8 @@ export default function Home()
                         const current = new Date();
                         const date1 = new Date(res.partnerInfo.dateOfBirth);
                         const date2 = new Date(res.user.dateOfBirth);
+                        date1.setFullYear(current.getFullYear());
+                        date2.setFullYear(current.getFullYear());
                         if(current>date1)
                         {
                           date1.setFullYear(current.getFullYear()+1);
@@ -137,11 +144,23 @@ export default function Home()
                         {
                           date2.setFullYear(current.getFullYear()+1);
                         }
-                        const temp1 = parseInt((current.getTime()-date1.getTime())/ (1000 * 3600 * 24));
-                        const temp2 = parseInt((current.getTime()-date2.getTime())/ (1000 * 3600 * 24));
-                        
-                        setYourCountDown(Math.abs(temp2)+2);
-                        setPartnerCountDown(Math.abs(temp1)+2);
+                        const temp1 = parseInt((date1.getTime()-current.getTime())/ (1000 * 3600 * 24));
+                        const temp2 = parseInt((date2.getTime()-current.getTime())/ (1000 * 3600 * 24));
+                        if(temp1===0)
+                        {
+                          setPartnerCountDown("Today is your partner's Birthday!");
+                        }
+                        else{
+                          setPartnerCountDown(Math.abs(temp1));
+                        }
+                        if(temp2===0)
+                        {
+                          setYourCountDown("Today is your Birthday!")
+                        }
+                        else
+                        {
+                           setYourCountDown(Math.abs(temp2));
+                        }
                         setBdayWidget(true);
                       }
                       else if(res.widget.widget[i].type==="special")
@@ -163,7 +182,15 @@ export default function Home()
                             setUpComingEvent(date.event);
                           }
                         })
-                        setUpComingDay(Math.round(closest));
+                        if(Math.round(closest)===0)
+                        {
+                          setUpComingDay("Today is "+date.event+" !");
+                        }
+                        else
+                        {
+                          setUpComingDay(Math.round(closest));
+                        }
+                        
                         
                       }
                     }
@@ -314,7 +341,6 @@ export default function Home()
             if(res)
             {
               setBdayWidget(true);
-
             }
           })
         }
@@ -353,6 +379,7 @@ export default function Home()
         .then(res=>res.data)
         .catch(err=>console.log(err))
         .then(res=>{
+          setIsSetting(false);
           setDayWidget(true);
         })
       }
@@ -407,9 +434,10 @@ export default function Home()
          })
       }
 
+
     return <div className="home-div">
-      <Navbar setHavePartner={setHavePartner}  requestList={requestList} havePartner={havePartner} handleSendReq={handleSendReq} formRef = {formRef} handleLogout={handleLogout} handleSendReq={handleSendReq} acceptRef={acceptRef}/>
-      <div className="home-background">
+      <Navbar isHome={isHome} setRequestList={setRequestList} setHavePartner={setHavePartner}  requestList={requestList} havePartner={havePartner} handleSendReq={handleSendReq} formRef = {formRef} handleLogout={handleLogout} handleSendReq={handleSendReq} acceptRef={acceptRef}/>
+      <div className="home-background" style={{backgroundImage:"url("+backgroundUrl+")"}}>
         <div className="home-overlay">
             <div className="home-widget anniverse">
             {!havePartner&&<div className="home-noPartner">You need to have a partner to access this widget</div>}
@@ -493,7 +521,7 @@ export default function Home()
             </div>
 
         </div>
-            <div className="foreground"></div>
+            <div className="foreground" id="foreground"></div>
       </div>
 
     </div>

@@ -1,13 +1,14 @@
 require('dotenv').config({path: __dirname + '/./.env'});
 require('./config/passport-setup');
 const express = require('express');
-const CLIENT_URL = "http://localhost:3000";
 const session = require('express-session');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+const inProduction = process.env.NODE_ENV === "production";
+const CLIENT_URL = inProduction ? process.env.DOMAIN_NAME : "http://localhost:3000";
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
@@ -19,17 +20,12 @@ const chatRoutes = require('./routes/chat');
 const videofsRoutes = require('./routes/videoFs');
 const postRoutes = require('./routes/post');
 const widgetRoutes = require('./routes/widget');
-const multer = require('multer');
-const storage = require('./GridFsManger');
-const Grid = require('gridfs-stream');
+const homeRoutes = require('./routes/homeBackground');
 const methodOverride = require('method-override');
 const mongoURI = "mongodb://localhost:27017/couplove";
 const socket = require('socket.io');
-const RoomModel = require('./models/roomModel');
 const Chat = require('./entities/Chat');
 const ChatManager = require('./dbmanagers/ChatManager');
-const UserModel = require('./models/userModel');
-const sp = require('socket.io-stream');
 const users=[];
 
  mongoose.connect(mongoURI,{
@@ -94,11 +90,9 @@ io.on('connection', async(socket)=>{
       }
     })
     io.to(String(data.roomId)).emit('me',{id:socket.id,users:track});
-    console.log(track);
   });
 
   socket.on('sendMsg',async(msg)=>{
-    console.log(msg);
     let chat;
     let createdChat;
     const timeOfCreation = new Date();
@@ -208,3 +202,4 @@ app.use('/chat',chatRoutes);
 app.use('/videoFs',videofsRoutes);
 app.use('/widget',widgetRoutes);
 app.use('/post',postRoutes);
+app.use('/home',homeRoutes);
