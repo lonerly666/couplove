@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const app = express();
 const port = process.env.PORT || 5000;
 const inProduction = process.env.NODE_ENV === "production";
+const path = require('path');
 const CLIENT_URL = inProduction ? process.env.DOMAIN_NAME : "http://localhost:3000";
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -31,6 +32,10 @@ const users=[];
 
 if (inProduction) {
   app.use(sslRedirect());
+  app.use(express.static('client/build'))
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+  })
 }
 
 
