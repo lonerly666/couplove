@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 const GridFsStorage = require('multer-gridfs-storage');
 
-const mongoURI = 'mongodb://localhost:27017/couplove';
+const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 
 // Create storage engine
 const storage = new GridFsStorage({

@@ -23,7 +23,7 @@ const postRoutes = require('./routes/post');
 const widgetRoutes = require('./routes/widget');
 const homeRoutes = require('./routes/homeBackground');
 const methodOverride = require('method-override');
-const mongoURI = "mongodb://localhost:27017/couplove";
+const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const socket = require('socket.io');
 const Chat = require('./entities/Chat');
 const ChatManager = require('./dbmanagers/ChatManager');

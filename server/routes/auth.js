@@ -1,10 +1,11 @@
 require('dotenv').config({path: __dirname + '/../.env'});
 const router = require('express').Router();
 const passport = require('passport');
-const CLIENT_URL = "http://localhost:3000";
+const inProduction = process.env.NODE_ENV === "production";
+const CLIENT_URL = inProduction ? process.env.DOMAIN_NAME : "http://localhost:3000";
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const mongoURI = "mongodb://localhost:27017/couplove";
+const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const storage = require('../GridFsManger');
 const conn = mongoose.createConnection(mongoURI);
 const UserModel = require('../models/userModel');

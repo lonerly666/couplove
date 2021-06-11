@@ -6,7 +6,7 @@ const User = require('../entities/User');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const storage = require('../GridFsManger');
-const mongoURI = "mongodb://localhost:27017/couplove";
+const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const conn = mongoose.createConnection(mongoURI);
 const RoomModel = require('../models/roomModel');
 const ChatManager = require('../dbmanagers/ChatManager');
