@@ -34,6 +34,7 @@ export default function Home()
   const [upComingDay,setUpComingDay] = useState();
   const [backgroundUrl,setBackgroundUrl] = useState('');
   const [isHome,setIsHome] = useState(true);
+  const [date,setDate] = useState();
 
   const formRef = useRef();
   const acceptRef = useRef();

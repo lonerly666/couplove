@@ -2,7 +2,8 @@ require('dotenv').config({path: __dirname + '/../.env'});
 const passport = require('passport');
 const User = require('../models/userModel');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const AUTH_REDIRECT_URL="http://localhost:5000";
+const inProduction = process.env.NODE_ENV === "production";
+const AUTH_REDIRECT_URL = inProduction ? process.env.DOMAIN_NAME : "http://localhost:5000";
 
 
 passport.use(User.createStrategy());

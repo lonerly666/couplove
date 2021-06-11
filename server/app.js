@@ -26,7 +26,13 @@ const mongoURI = "mongodb://localhost:27017/couplove";
 const socket = require('socket.io');
 const Chat = require('./entities/Chat');
 const ChatManager = require('./dbmanagers/ChatManager');
+const sslRedirect = require('heroku-ssl-redirect').default;
 const users=[];
+
+if (inProduction) {
+  app.use(sslRedirect());
+}
+
 
  mongoose.connect(mongoURI,{
   useNewUrlParser:true,
@@ -70,7 +76,7 @@ app.use(
 const server = app.listen(port);
 const io = socket(server,{
   cors: {
-    origin: "http://localhost:3000",
+    origin: CLIENT_URL,
     methods: ["GET", "POST"]
 }
 })
