@@ -9,13 +9,13 @@
 }
 
 .video-player{
-    height: 650px;
+    height: 70vh;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 50px;
     position:relative;
+    border:1px solid black;
 }
+
 #controls
 {
     position:absolute;
@@ -202,4 +202,8 @@
     position: absolute;
     right:10px;
     color: black;
+}
+#video-player-local{
+    height: 100%;
+    width: 100%;
 }

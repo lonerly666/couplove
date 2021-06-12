@@ -109,7 +109,7 @@ export default function ChatRoom(props)
         setText("");
       }
       else{
-        console.log("You cant send anything")
+        alert("You must type something");
       }
       document.getElementById("chat").value = null;
     }

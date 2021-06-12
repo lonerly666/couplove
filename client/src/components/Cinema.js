@@ -50,7 +50,7 @@ export default function Cinema()
             .then(res=>res.data)
             .catch(err=>console.log(err))
             .then(res=>{
-                socket.emit('join',res.roomInfo._id);
+                socket.emit('join',{roomId:res.roomInfo._id});
             });
             
             initialRun.current = false;

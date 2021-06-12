@@ -7,7 +7,6 @@ const SocketContext = createContext();
 const ENDPOINT='localhost:5000';
 let socket;
 let isCaller = false;
-let isAnswered = false;
 let name ;
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -146,7 +145,6 @@ const ContextProvider = ({ children }) => {
     local = currentStream;
     myVideo.current.srcObject = currentStream;
     }); 
-    isAnswered = true;
     setCallAccepted(true);
     const peer = new Peer({ initiator: false, trickle: false, stream:local });
     peer.on('signal', (data) => {
@@ -201,7 +199,7 @@ const ContextProvider = ({ children }) => {
       document.getElementById('chat-body').style.marginLeft = "auto";
       document.getElementById("video-div").style.visibility = "hidden";
     }
-    connectionRef.current.destroy();
+    if(connectionRef.current)connectionRef.current.destroy();
 
     window.location.reload();
   };
@@ -228,7 +226,6 @@ const ContextProvider = ({ children }) => {
       muteVideo,
       declineCall,
       isCaller,
-      isAnswered,
     }}
     >
       {children}

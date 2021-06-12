@@ -46,6 +46,7 @@ export default function UserProfileForm()
     const [newProfile,setNewProfile]=useState(false);
     const [partner,setPartner] = useState();
     const [dateOfRelationship,setDateOfRelationship] = useState();
+    const [userId,setUserId] = useState();
     const formRef = useRef();
     const classes = useStyles();
 
@@ -60,6 +61,7 @@ export default function UserProfileForm()
           } 
           else if(res.user.nickname)
           {
+            setUserId(res.user._id);
             setNickname(res.user.nickname);
             setDob(res.user.dateOfBirth);
             setGender(res.user.gender);
@@ -165,6 +167,7 @@ export default function UserProfileForm()
       </div>
           <br/>
           <div className="infoDiv">
+          <div className="home-userId"><h3>Your ID: </h3>{userId}</div><br/>
             <TextField
             id="nickname"
             className="inputFields"

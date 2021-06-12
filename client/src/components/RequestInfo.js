@@ -46,13 +46,14 @@ export default function RequestInfo(props)
       formdata.append('senderId',reqInfo.senderId)
       await axios({
         method:'post',
-        url:'/user/declineUser',
+        url:'/user/declineRequest',
         data:formdata,
         header:{'Content-Type': 'multipart/form-data'}
       })
       .then(res=>res.data)
       .catch(err=>console.log(err))
       .then(res=>{
+        console.log(res);
         if(res)
         {
           setRequestList(prev=>{

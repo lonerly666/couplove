@@ -76,7 +76,7 @@ export default function Home()
             }
             else
             {
-
+            
               axios.get('/home/getBackground')
               .then(res=>res.data)
               .catch(err=>console.log(err))
@@ -524,7 +524,6 @@ export default function Home()
         </div>
             <div className="foreground" id="foreground"></div>
       </div>
-
     </div>
     
 }

@@ -10,7 +10,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 
 export default function VideoCall()
 {
-    const {name,callAccepted,myVideo,userVideo,callEnded,stream,callUser,leaveCall,initializeVideo,muteAudio,muteVideo,declineCall,isAnswered} = useContext(SocketContext);
+    const {callAccepted,myVideo,userVideo,callEnded,leaveCall,muteAudio,muteVideo,declineCall} = useContext(SocketContext);
         const [isMuted,setIsMuted] = useState(false);
         const [isDisplayed,setIsDisplayed] = useState(true);
    
@@ -26,7 +26,6 @@ export default function VideoCall()
            setIsDisplayed(!isDisplayed);
            muteVideo();
    }
-       console.log(isAnswered);
         return <div className="video-div" id="video-div">
 
                 
@@ -39,7 +38,7 @@ export default function VideoCall()
                 </div>}
                 <div className="option-div">
                 <IconButton onClick={handleDisplay} className="option-btn" id="display">{isDisplayed?<VideocamIcon/>:<VideocamOffIcon/>}</IconButton>
-                <IconButton onClick={isAnswered?leaveCall:declineCall} className="option-btn" id="end"><CallEndIcon fontSize="inherit"/></IconButton>
+                <IconButton onClick={callAccepted?leaveCall:declineCall} className="option-btn" id="end"><CallEndIcon fontSize="inherit"/></IconButton>
                 <IconButton onClick={handleMute} className="option-btn">{isMuted?<MicOffIcon/>:<MicIcon/>}</IconButton>
                 </div>
         </div>
