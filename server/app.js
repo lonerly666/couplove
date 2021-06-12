@@ -23,7 +23,8 @@ const postRoutes = require('./routes/post');
 const widgetRoutes = require('./routes/widget');
 const homeRoutes = require('./routes/homeBackground');
 const methodOverride = require('method-override');
-const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
+// const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
+const mongoURI = process.env.DBURL;
 const socket = require('socket.io');
 const Chat = require('./entities/Chat');
 const ChatManager = require('./dbmanagers/ChatManager');
@@ -32,10 +33,6 @@ const users=[];
 
 if (inProduction) {
   app.use(sslRedirect());
-  app.use(express.static('client/build'))
-  app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'client','build','index.html'));
-  })
 }
 
 
