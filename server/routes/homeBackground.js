@@ -2,7 +2,6 @@ require('dotenv').config({path: __dirname + '/../.env'});
 const router = require('express').Router();
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-// const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const mongoURI = process.env.DBURL;
 const storage = require('../GridFsHomeBackground');
 const conn = mongoose.createConnection(mongoURI);

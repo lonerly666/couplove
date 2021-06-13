@@ -4,7 +4,6 @@ const passport = require('passport');
 const CLIENT_URL = "http://localhost:3000";
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-// const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const mongoURI = process.env.DBURL;
 const videoStorage = require('../GridFsVideoManager');
 const UserModel = require('../models/userModel');

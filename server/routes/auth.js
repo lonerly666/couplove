@@ -5,7 +5,6 @@ const inProduction = process.env.NODE_ENV === "production";
 const CLIENT_URL = inProduction ? process.env.DOMAIN_NAME : "http://localhost:3000";
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-// const mongoURI = "mongodb+srv://jeremy:JnJc0429@couplove.qvqnv.mongodb.net/Couplove?retryWrites=true&w=majority";
 const mongoURI = process.env.DBURL;
 const storage = require('../GridFsManger');
 const conn = mongoose.createConnection(mongoURI);
@@ -21,21 +20,6 @@ conn.once('open', () => {
   gfs.collection('profileImg');
 });
 
-function getImg(userId)
-{
-  gfs.files.findOne({metadata:userId},(err,files)=>{
-    if(!files||files.length===0)
-    {
-      return null;
-    }
-    else
-    {
-      return ({
-        filename:files.filename
-      })
-    }
-  })
-}
 
 
 
