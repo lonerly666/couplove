@@ -1,5 +1,5 @@
 {
-  "name": "couplove",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,7 +8,7 @@
     "start": "concurrently \"npm run backend\" \"cd client && npm start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "author": "Jeremy",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
@@ -33,7 +33,6 @@
     "mongoose-findorcreate": "^3.0.0",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.2.0",
-    "p2p-ckplayer": "^0.4.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-local-mongoose": "^6.1.0",
