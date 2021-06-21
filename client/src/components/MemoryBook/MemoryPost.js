@@ -46,7 +46,7 @@ export default function MemoryPost(props)
         if(post.fileId)
         {
         let temp =[];
-       await post.fileId.map(id=>{
+        post.fileId.map(id=>{
             let url = "/post/getPostImage/"+id;
             temp.push(url);
         })
